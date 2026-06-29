@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormTechnologyRequest;
+use App\Http\Resources\TechnologyResource;
 use App\Models\Technology;
-use App\Http\Requests\StoreTechnologyRequest;
-use App\Http\Requests\UpdateTechnologyRequest;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TechnologyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Technology::query()->orderFromRequest($request);
+        $search = $request->get('q');
+        if ($search) {
+            $query->where('name', 'like', '%'.$search.'%');
+        }
+
+        return Inertia::render('technology/index', [
+            'collection' => TechnologyResource::collection($query->paginate(10)->withQueryString()),
+            'q' => $search,
+        ]);
     }
 
     /**
@@ -21,23 +32,21 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('technology/form', [
+            'Technology' => new Technology,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTechnologyRequest $request)
+    public function store(FormTechnologyRequest $request)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Technology $technology)
-    {
-        //
+        Technology::create(['name' => $request->validated(), 'slug' => Technology::createSlug($request->validated('name'))]);
+
+        return to_route('technology.index')->with('success', 'La technologie à été créée avec succès');
+
     }
 
     /**
@@ -45,15 +54,19 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return Inertia::render('technology/form', [
+            'Technology' => new TechnologyResource($technology),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTechnologyRequest $request, Technology $technology)
+    public function update(FormTechnologyRequest $request, Technology $technology)
     {
-        //
+        $technology->update($request->validated());
+
+        return to_route('technology.index')->with('success', 'La technologie à été modifiée avec succès');
     }
 
     /**
@@ -61,6 +74,8 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+
+        return to_route('technology.index')->with('success', 'La technologie à été supprimée avec succès');
     }
 }

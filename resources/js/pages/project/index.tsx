@@ -1,0 +1,153 @@
+import { Form, Link } from '@inertiajs/react';
+import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { SortableTableHead } from '@/components/sortable-table-head';
+import { TopAction } from '@/components/top-action';
+import { Button } from '@/components/ui/button';
+import { CollectionPagination } from '@/components/ui/Collection-Pagination';
+import { Input } from '@/components/ui/input';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
+import type { BreadcrumbItem, PaginatedCollection, Project, Technology } from '@/types';
+import { JSX } from 'react/jsx-runtime';
+import technology from '@/routes/technology';
+import WithAppLayout from '@/layouts/app-layout';
+import project from '@/routes/project';
+
+const Breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Projets réalisés',
+        href: project.index()
+    },
+];
+
+type Props = {
+    collection: PaginatedCollection<Project>;
+    q: string;
+};
+
+export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
+    return (
+        <div className="space-y-4">
+            <TopAction>
+                <Form
+                    {...project.index.form}
+                    className="flex items-center gap-2"
+                >
+                    <Input
+                        placeholder="Rechercher..."
+                        name="q"
+                        defaultValue={q ?? ''}
+                        autoFocus
+                    />
+                    <Button>Rechercher</Button>
+                </Form>
+            </TopAction>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <SortableTableHead field="id">ID</SortableTableHead>
+                        <TableHead></TableHead>
+                        <SortableTableHead field="title">Nom</SortableTableHead>
+                        <SortableTableHead field="status">Status</SortableTableHead>
+                        <TableHead className="text-end">Actions</TableHead>
+                    </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                    <TableRow>
+                        <TableCell colSpan={5}>
+                            <Button
+                                asChild
+                                variant="outline"
+                                className="w-full"
+                            >
+                                <Link href={project.create()}>
+                                    <PlusIcon />
+                                    Ajouter une technologie
+                                </Link>
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                    {collection.data.map((item) => (
+                        <TableRow key={item.id}>
+                            <TableCell>{item.id}</TableCell>
+                            <TableCell>
+                                {item.image ? (
+                                    <img
+                                        src={item.image}
+                                        alt=""
+                                        className="rouded-lg aspect-square w-20 object-cover"
+                                    />
+                                ) : (
+                                    <div className="aspect-square size-20 bg-background"></div>
+                                )}
+                            </TableCell>
+                            <TableCell>
+                                <Link
+                                    href={project.edit({
+                                        project: parseInt(item.id),
+                                    })}
+                                    className="hover:underline"
+                                >
+                                    {item.title}
+                                </Link>
+                            </TableCell>
+                            <TableCell>
+                                <Link
+                                    href={project.edit({
+                                        project: parseInt(item.id),
+                                    })}
+                                    className="hover:underline"
+                                >
+                                    {item.status}
+                                </Link>
+                            </TableCell>
+                            <TableCell>
+                                <div className="item-center flex justify-end gap-2">
+                                    <Button
+                                        asChild
+                                        size="icon"
+                                        variant="outline"
+                                    >
+                                        <Link
+                                            href={project.edit({
+                                                project: parseInt(item.id),
+                                            })}
+                                        >
+                                            <EditIcon size={16} />
+                                        </Link>
+                                    </Button>
+                                    <Button
+                                        asChild
+                                        size="icon"
+                                        variant="destructive-outline"
+                                    >
+                                        <Link
+                                            href={project.destroy({
+                                                project: parseInt(item.id),
+                                            })}
+                                            onBefore={() =>
+                                                confirm(
+                                                    'Voulez vous vraiment supprimer ce projet ?',
+                                                )
+                                            }
+                                        >
+                                            <TrashIcon size={16} />
+                                        </Link>
+                                    </Button>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            <CollectionPagination collection={collection} />
+        </div>
+    );
+});
