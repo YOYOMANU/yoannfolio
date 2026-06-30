@@ -1,4 +1,4 @@
-import { Form, Link } from '@inertiajs/react';
+import { Form, Link, router } from '@inertiajs/react';
 import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import { SortableTableHead } from '@/components/sortable-table-head';
 import { TopAction } from '@/components/top-action';
@@ -17,6 +17,8 @@ import type { BreadcrumbItem, PaginatedCollection, Technology } from '@/types';
 import { JSX } from 'react/jsx-runtime';
 import technology from '@/routes/technology';
 import WithAppLayout from '@/layouts/app-layout';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { useState } from 'react';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
@@ -31,6 +33,15 @@ type Props = {
 };
 
 export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
+    const [technologyToDelete, setTechnologyToDelete] = useState<number | null>(null);
+
+    const handleDelete = () => {
+        if (technologyToDelete === null) return;
+
+        router.delete(technology.destroy({ technology: technologyToDelete }).url, {
+            onFinish: () => setTechnologyToDelete(null),
+        });
+    };
 
     return (
         <div className="space-y-4">
@@ -113,22 +124,13 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                                         </Link>
                                     </Button>
                                     <Button
-                                        asChild
                                         size="icon"
                                         variant="destructive-outline"
+                                        onClick={() =>
+                                            setTechnologyToDelete(parseInt(item.id))
+                                        }
                                     >
-                                        <Link
-                                            href={technology.destroy({
-                                                technology: parseInt(item.id),
-                                            })}
-                                            onBefore={() =>
-                                                confirm(
-                                                    'Voulez vous vraiment supprimer cette technologie ?',
-                                                )
-                                            }
-                                        >
-                                            <TrashIcon size={16} />
-                                        </Link>
+                                        <TrashIcon size={16} />
                                     </Button>
                                 </div>
                             </TableCell>
@@ -137,6 +139,27 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                 </TableBody>
             </Table>
             <CollectionPagination collection={collection} />
+            <AlertDialog
+                open={technologyToDelete !== null}
+                onOpenChange={(open) => !open && setTechnologyToDelete(null)}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>
+                            Voulez vous supprimer ce projet ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Cette action est irréversible.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete} variant={'destructive'} >
+                            Supprimer
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 });

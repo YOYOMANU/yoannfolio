@@ -88,8 +88,6 @@ function ProjectEditPage({ Project, technologies }: Props) {
         };
     }, [preview.image]);
 
-    console.log(Project);
-
 
     return (
         <Form {...action}>

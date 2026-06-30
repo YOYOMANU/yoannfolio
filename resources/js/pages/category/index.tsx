@@ -1,5 +1,6 @@
-import { Form, Link } from '@inertiajs/react';
+import { Form, Link, router } from '@inertiajs/react';
 import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 import { SortableTableHead } from '@/components/sortable-table-head';
 import { TopAction } from '@/components/top-action';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,16 @@ import type { BreadcrumbItem, Category, PaginatedCollection, Technology } from '
 import technology from '@/routes/technology';
 import WithAppLayout from '@/layouts/app-layout';
 import category from '@/routes/category';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
@@ -31,6 +42,15 @@ type Props = {
 };
 
 export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
+    const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null);
+
+    const handleDelete = () => {
+        if (categoryToDelete === null) return;
+
+        router.delete(category.destroy({ category: categoryToDelete }).url, {
+            onFinish: () => setCategoryToDelete(null),
+        });
+    };
 
     return (
         <div className="space-y-4">
@@ -102,22 +122,13 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                                         </Link>
                                     </Button>
                                     <Button
-                                        asChild
                                         size="icon"
                                         variant="destructive-outline"
+                                        onClick={() =>
+                                            setCategoryToDelete(parseInt(item.id))
+                                        }
                                     >
-                                        <Link
-                                            href={category.destroy({
-                                                category: parseInt(item.id),
-                                            })}
-                                            onBefore={() =>
-                                                confirm(
-                                                    'Voulez vous vraiment supprimer cette categorie ?',
-                                                )
-                                            }
-                                        >
-                                            <TrashIcon size={16} />
-                                        </Link>
+                                        <TrashIcon size={16} />
                                     </Button>
                                 </div>
                             </TableCell>
@@ -126,6 +137,28 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                 </TableBody>
             </Table>
             <CollectionPagination collection={collection} />
+
+            <AlertDialog
+                open={categoryToDelete !== null}
+                onOpenChange={(open) => !open && setCategoryToDelete(null)}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>
+                            Voulez vous supprimer cette catégorie ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Cette action est irréversible.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete} variant={'destructive'} >
+                            Supprimer
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 });

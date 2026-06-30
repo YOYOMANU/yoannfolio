@@ -1,4 +1,4 @@
-import { Form, Link } from '@inertiajs/react';
+import { Form, Link, router } from '@inertiajs/react';
 import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import { SortableTableHead } from '@/components/sortable-table-head';
 import { TopAction } from '@/components/top-action';
@@ -18,6 +18,8 @@ import { JSX } from 'react/jsx-runtime';
 import technology from '@/routes/technology';
 import WithAppLayout from '@/layouts/app-layout';
 import project from '@/routes/project';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { useState } from 'react';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
@@ -32,6 +34,15 @@ type Props = {
 };
 
 export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
+    const [projectToDelete, setProjectToDelete] = useState<number | null>(null);
+
+    const handleDelete = () => {
+        if (projectToDelete === null) return;
+
+        router.delete(project.destroy({ project: projectToDelete }).url, {
+            onFinish: () => setProjectToDelete(null),
+        });
+    };
     return (
         <div className="space-y-4">
             <TopAction>
@@ -124,22 +135,13 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                                         </Link>
                                     </Button>
                                     <Button
-                                        asChild
                                         size="icon"
                                         variant="destructive-outline"
+                                        onClick={() =>
+                                            setProjectToDelete(parseInt(item.id))
+                                        }
                                     >
-                                        <Link
-                                            href={project.destroy({
-                                                project: parseInt(item.id),
-                                            })}
-                                            onBefore={() =>
-                                                confirm(
-                                                    'Voulez vous vraiment supprimer ce projet ?',
-                                                )
-                                            }
-                                        >
-                                            <TrashIcon size={16} />
-                                        </Link>
+                                        <TrashIcon size={16} />
                                     </Button>
                                 </div>
                             </TableCell>
@@ -148,6 +150,27 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                 </TableBody>
             </Table>
             <CollectionPagination collection={collection} />
+            <AlertDialog
+                open={projectToDelete !== null}
+                onOpenChange={(open) => !open && setProjectToDelete(null)}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>
+                            Voulez vous supprimer ce projet ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Cette action est irréversible.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete} variant={'destructive'} >
+                            Supprimer
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 });
