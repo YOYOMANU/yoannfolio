@@ -6,11 +6,17 @@ use App\Models\Trait\HasSlug;
 use App\Models\Trait\HasSortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Override;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Technology extends Model
+class Technology extends Model implements HasMedia
 {
     /** @use HasFactory<TechnologyFactory> */
-    use HasFactory, HasSlug, HasSortable;
+    use HasFactory, HasSlug, HasSortable, InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -22,13 +28,25 @@ class Technology extends Model
         'id',
     ];
 
-    public function stackLayers()
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(StackLayer::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function projects()
     {
         return $this->belongsToMany(Project::class);
+    }
+
+    #[Override]
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singleFile();
+    }
+
+    #[Override]
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit(Fit::Crop, 160, 160);
     }
 }

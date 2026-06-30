@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Model;
-use App\Models\Project;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Model>
+ * @extends Factory<Category>
  */
-class ProjectFeautreFactory extends Factory
+class CategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +17,10 @@ class ProjectFeautreFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->unique()->word();
+
         return [
-            'project_id' => Project::factory(),
-            'title' => ucfirst(fake()->words(3, true)),
-            'description' => fake()->sentence(15),
+            'name' => ucfirst($name),
         ];
     }
 }

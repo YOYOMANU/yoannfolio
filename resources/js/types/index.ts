@@ -7,6 +7,11 @@ export type Technology = {
     name: string;
     slug: string;
     image?: string;
+    categories: Category[];
+}
+export type Category = {
+    id: string;
+    name: string;
 }
 
 export interface Project {
@@ -26,6 +31,7 @@ export interface Project {
     is_featured: boolean;
     status: string;
     image?: string;
+    technologies: Technology[];
 }
 
 export type PreviewState = {

@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
-use App\Models\Technology;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class ProjectSeeder extends Seeder
 {
@@ -79,7 +77,7 @@ class ProjectSeeder extends Seeder
         ];
 
         foreach ($projects as $data) {
-            $project = Project::updateOrCreate(
+            $project = Project::firstOrCreate(
                 ['slug' => $data['slug']],
                 [
                     'title' => $data['title'],
@@ -97,23 +95,6 @@ class ProjectSeeder extends Seeder
                     'status' => 'published',
                 ]
             );
-
-            // Technologies — table partagée avec stack_layers, on évite les doublons
-            foreach ($data['stack'] as $index => $techName) {
-                $technology = Technology::firstOrCreate(
-                    ['slug' => Str::slug($techName)],
-                    ['name' => $techName]
-                );
-            }
-
-            // Features — on repart à zéro à chaque seed pour rester idempotent
-            $project->features()->delete();
-            foreach ($data['features'] as $index => $feature) {
-                $project->features()->create([
-                    'title' => $feature['title'],
-                    'description' => $feature['description'],
-                ]);
-            }
         }
     }
 }

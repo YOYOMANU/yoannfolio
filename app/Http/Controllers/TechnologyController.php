@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormTechnologyRequest;
 use App\Http\Resources\TechnologyResource;
+use App\Models\Category;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,6 +35,7 @@ class TechnologyController extends Controller
     {
         return Inertia::render('technology/form', [
             'Technology' => new Technology,
+            'categories' => Category::orderBy('name', 'asc')->get(['id', 'name']),
         ]);
     }
 
@@ -43,7 +45,9 @@ class TechnologyController extends Controller
     public function store(FormTechnologyRequest $request)
     {
 
-        Technology::create(['name' => $request->validated(), 'slug' => Technology::createSlug($request->validated('name'))]);
+        $technology = Technology::create($request->validated());
+        $technology->categories()->sync($request->input('category_ids', []));
+        $this->handleImages($technology, $request);
 
         return to_route('technology.index')->with('success', 'La technologie à été créée avec succès');
 
@@ -56,7 +60,9 @@ class TechnologyController extends Controller
     {
         return Inertia::render('technology/form', [
             'Technology' => new TechnologyResource($technology),
+            'categories' => Category::orderBy('name', 'asc')->get(['id', 'name']),
         ]);
+
     }
 
     /**
@@ -65,8 +71,18 @@ class TechnologyController extends Controller
     public function update(FormTechnologyRequest $request, Technology $technology)
     {
         $technology->update($request->validated());
+        $technology->categories()->sync($request->input('category_ids', []));
+        $this->handleImages($technology, $request);
 
         return to_route('technology.index')->with('success', 'La technologie à été modifiée avec succès');
+    }
+
+    private function handleImages(Technology $technology, FormTechnologyRequest $request): void
+    {
+        // Ajout des nouvelles images
+        if ($request->hasFile('image')) {
+            $technology->addMediaFromRequest('image')->toMediaCollection('image');
+        }
     }
 
     /**

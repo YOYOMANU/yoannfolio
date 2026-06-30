@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TechnologyResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,6 @@ class TechnologyResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
-            'slug' => $this->resource->slug,
-            'image' => $this->resource->getFirstMediaUrl('image'),
-            'categories' => CategoryResource::collection($this->resource->categories),
         ];
     }
 }

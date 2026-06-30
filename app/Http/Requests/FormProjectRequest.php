@@ -32,11 +32,13 @@ class FormProjectRequest extends FormRequest
             'role' => ['required', 'string', 'min:4'],
             'context' => ['required', 'string', 'min:4'],
             'swatch_class' => ['required', 'string', 'min:4'],
-            'live_url' => ['required', 'string', 'min:4'],
-            'repo_url' => ['required', 'string', 'min:4'],
+            'live_url' => ['nullable', 'string', 'min:4'],
+            'repo_url' => ['nullable', 'string', 'min:4'],
             'is_featured' => ['required', 'boolean'],
             'status' => ['required', 'string'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
+            'technology_ids' => ['nullable', 'array'],
+            'technology_ids.*' => ['integer', 'exists:technologies,id'],
         ];
     }
 }

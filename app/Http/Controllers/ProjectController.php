@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FormProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -36,6 +37,7 @@ class ProjectController extends Controller
 
         return Inertia::render('project/form', [
             'Project' => new ProjectResource($project),
+            'technologies' => Technology::orderBy('name', 'asc')->get(['id', 'name']),
         ]);
     }
 
@@ -46,6 +48,7 @@ class ProjectController extends Controller
     {
         //
         $project = Project::create($request->validated());
+        $project->technologies()->sync($request->input('technology_ids', []));
         $this->handleImages($project, $request);
 
         return to_route('project.index')->with('success', 'Le projet à été créé avec succès');
@@ -60,6 +63,8 @@ class ProjectController extends Controller
 
         return Inertia::render('project/form', [
             'Project' => new ProjectResource($project),
+            'technologies' => Technology::orderBy('name', 'asc')->get(['id', 'name']),
+
         ]);
     }
 
@@ -69,6 +74,7 @@ class ProjectController extends Controller
     public function update(FormProjectRequest $request, Project $project)
     {
         $project->update($request->validated());
+        $project->technologies()->sync($request->input('technology_ids', []));
         $this->handleImages($project, $request);
 
         return to_route('project.index')->with('success', 'Le projet à été modifié avec succès');

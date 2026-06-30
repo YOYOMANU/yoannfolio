@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\StackLayer;
+use App\Models\Category;
 use App\Models\Technology;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stack_layer_technology', function (Blueprint $table) {
-            $table->foreignIdFor(StackLayer::class)->constrained()->cascadeOnDelete();
+        Schema::create('category_technology', function (Blueprint $table) {
             $table->foreignIdFor(Technology::class)->constrained()->cascadeOnDelete();
-            $table->primary(['stack_layer_id', 'technology_id']);
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
+
+            $table->primary(['category_id', 'technology_id']);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stack_layer_technology');
+        Schema::dropIfExists('category_technology');
     }
 };

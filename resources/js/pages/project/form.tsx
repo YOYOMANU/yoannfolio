@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Form } from '@inertiajs/react';
+import { Form, useForm } from '@inertiajs/react';
 import { TopAction } from '@/components/top-action';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import WithAppLayout from '@/layouts/app-layout';
 import { cn } from '@/lib/utils';
-import { BreadcrumbItem, PreviewState, Project, SelectOption } from '@/types';
+import { BreadcrumbItem, PreviewState, Project, SelectOption, Technology } from '@/types';
 import project from '@/routes/project';
 import {
     SaveIcon,
@@ -22,6 +22,7 @@ import { ImageInput } from '@/components/ui/image-input';
 import Section from '@/components/section';
 import ProjectPreviewCard from '@/components/project-preview-card';
 import { SelectWithItems } from '@/components/ui/select-with-items';
+import { MultiSelect } from '@/components/ui/multi-select';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     { title: 'Projet', href: project.index().url },
@@ -30,6 +31,7 @@ const Breadcrumbs: BreadcrumbItem[] = [
 
 type Props = {
     Project: Project;
+    technologies: Technology[];
 };
 
 const statusOptions: SelectOption[] = [
@@ -38,7 +40,7 @@ const statusOptions: SelectOption[] = [
     { value: "archived", label: "Archivé" },
 ]
 
-function ProjectEditPage({ Project }: Props) {
+function ProjectEditPage({ Project, technologies }: Props) {
     const action = Project.id
         ? project.update.form({ project: parseInt(Project.id) })
         : project.store.form();
@@ -66,6 +68,17 @@ function ProjectEditPage({ Project }: Props) {
         if (file) updatePreview('image', URL.createObjectURL(file));
     };
 
+    // IDs déjà associés à la techno
+    const defaultTechnologies = Project.technologies?.map((c) => c.id) ?? [];
+    const { data, setData } = useForm({
+        technology_ids: defaultTechnologies,
+    });
+
+    const categoryOptions = technologies.map((c) => ({
+        value: c.id,
+        label: c.name,
+    }));
+
     // Nettoie les object URLs créés pour éviter les fuites mémoire
     useEffect(() => {
         return () => {
@@ -75,6 +88,7 @@ function ProjectEditPage({ Project }: Props) {
         };
     }, [preview.image]);
 
+    console.log(Project);
 
 
     return (
@@ -155,6 +169,30 @@ function ProjectEditPage({ Project }: Props) {
                                             name="status"
                                         />
 
+                                    </FormField>
+                                    <FormField
+                                        htmlFor="technologies"
+                                        label="technologies"
+                                        error={errors['technology_ids']}
+                                    >
+                                        {/* Champs cachés pour la soumission */}
+                                        {data.technology_ids.map((id) => (
+                                            <input
+                                                key={id}
+                                                type="hidden"
+                                                name="technology_ids[]"
+                                                value={id}
+                                            />
+                                        ))}
+                                        <MultiSelect
+                                            id="categories"
+                                            options={categoryOptions}
+                                            value={data.technology_ids}
+                                            onChange={(ids) =>
+                                                setData('technology_ids', ids as string[])
+                                            }
+                                            placeholder="Associer des catégories…"
+                                        />
                                     </FormField>
                                 </div>
                             </Section>

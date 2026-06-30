@@ -48,11 +48,6 @@ class Project extends Model implements HasMedia
         return $this->belongsToMany(Technology::class)->orderBy('sort_order');
     }
 
-    public function features()
-    {
-        return $this->hasMany(ProjectFeature::class)->orderBy('sort_order');
-    }
-
     #[Override]
     public function registerMediaCollections(): void
     {
