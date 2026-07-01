@@ -56,8 +56,11 @@ class ProjectController extends Controller
 
     }
 
-    public function show(Project $project)
+    public function show(int $id, string $slug)
     {
+
+        $project = Project::findOrFail($id);
+
         return Inertia::render('project/show', [
             'project' => new ProjectResource(
                 $project->load(['technologies', 'features', 'media'])

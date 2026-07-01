@@ -15,6 +15,7 @@ return [
     */
 
     'default' => env('MAIL_MAILER', 'log'),
+    'contact_recipient' => env('MAIL_CONTACT_RECIPIENT', 'toi@example.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -114,5 +115,4 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
-
 ];

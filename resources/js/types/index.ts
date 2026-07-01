@@ -16,6 +16,14 @@ export type Category = {
     technologies: Technology[];
 }
 
+
+export type ContactForm = {
+    name: string
+    email: string
+    subject: string
+    message: string
+}
+
 export interface Project {
     id: string;
     slug: string;

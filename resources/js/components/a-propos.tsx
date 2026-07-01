@@ -1,9 +1,10 @@
+import contact from '@/routes/contact';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 
 export default function Apropos() {
     return (
-        <section className="geeklab">
+        <section id='apropos' className="geeklab">
             <div>
                 <div className="geeklab-inner">
                     <h2 className="font-display">Au-delà du code</h2>
@@ -13,7 +14,7 @@ export default function Apropos() {
 
                     {/* Utilisation de Link d'Inertia pour une navigation interne fluide et respect de la charte */}
                     <Link
-                        href="#contact"
+                        href={contact.create()}
                         className="card-link"
                         style={{ color: 'var(--primary)', fontWeight: 500 }}
                     >

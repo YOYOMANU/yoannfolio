@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, GraduationCap, Layers, Users } from 'lucide-react';
 import { sizeIcon } from './selected-projects';
+import projects from '@/routes/projects';
 
 export default function Hero() {
     return (
@@ -29,7 +30,7 @@ export default function Hero() {
                         {/* CTAs */}
                         <div className="flex flex-wrap items-center gap-4 hero-ctas reveal" style={{ transitionDelay: '240ms' }}>
                             <Link
-                                href="/#projets"
+                                href={projects.listing()}
                                 className="btn btn-primary"
                                 preserveScroll={true}
                             >

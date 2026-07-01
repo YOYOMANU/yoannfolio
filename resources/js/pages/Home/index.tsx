@@ -14,6 +14,7 @@ type Props = {
 
 function Home({ categories, Projects }: Props) {
 
+
     return (
         <>
             <Hero />

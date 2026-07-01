@@ -16,6 +16,7 @@ declare module '@inertiajs/core' {
                 success?: string;
                 error?: string;
             }
+            previousUrl?: string;
             sidebarOpen: boolean;
             [key: string]: unknown;
         };

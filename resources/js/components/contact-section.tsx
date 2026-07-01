@@ -1,5 +1,7 @@
 import { GithubIcon, MailIcon } from 'lucide-react';
 import { sizeIcon } from './selected-projects';
+import { Link } from '@inertiajs/react';
+import contact from '@/routes/contact';
 export default function ContactSection() {
     return (
         <section id="contact" className="contact">
@@ -9,14 +11,14 @@ export default function ContactSection() {
 
                 <div className="contact-ctas">
                     {/* Lien mailto natif (externe à Inertia) */}
-                    <a href="mailto:contact@yoannemmanuel.dev" className="btn btn-primary">
+                    <Link href={contact.create()} className="btn btn-primary">
                         <MailIcon size={sizeIcon} />
                         <span>Écrire un message</span>
-                    </a>
+                    </Link>
 
                     {/* Lien GitHub externe natif avec sécurité target="_blank" */}
                     <a
-                        href="https://github.com"
+                        href="https://github.com/YOYOMANU"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-outline"

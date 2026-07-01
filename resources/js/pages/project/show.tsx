@@ -1,8 +1,9 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Project } from '@/types';
 import { home } from '@/routes';
 import { WithPublicLayout } from '@/layouts/public-layout';
+import { SharedPageProps } from '@inertiajs/core';
 
 export const sizeIcon = 16;
 
@@ -11,14 +12,17 @@ type Props = {
 };
 
 function ProjectShow({ project }: Props) {
-    console.log(project);
+
+    const page = usePage<SharedPageProps>();
+    const previousUrl = page.props.previousUrl;
+
 
     return (
         <div className='p-15'>
             <div className="view-header" style={{ borderBottom: 'none', paddingBottom: 0, marginBottom: '1.5rem' }}>
-                <Link href={home()} className="back-link">
+                <Link href={previousUrl} preserveScroll preserveState className="back-link">
                     <ArrowLeft size={sizeIcon} />
-                    Retour aux projets
+                    Retour
                 </Link>
 
                 <p className="project-tag font-mono" style={{ marginBottom: '0.5rem' }}>
@@ -104,7 +108,7 @@ function ProjectShow({ project }: Props) {
                             <div style={{ marginTop: '2rem' }}>
                                 <Link
                                     href={project.repo_url}
-                                    target='blank'
+                                    target='_blank'
                                     rel="noopener noreferrer"
                                     className="btn btn-primary"
                                     style={{ width: '100%', justifyContent: 'center' }}

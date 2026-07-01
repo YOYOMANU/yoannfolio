@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from '@inertiajs/react';
+import contact from '@/routes/contact';
 
 export default function NavigationHome() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +18,9 @@ export default function NavigationHome() {
                     <Link href="/#projets" className="nav-link">
                         Projets
                     </Link>
+                    <Link href="/#stack" className="nav-link">
+                        Stack
+                    </Link>
                     <Link href="/#apropos" className="nav-link">
                         À propos
                     </Link>
@@ -25,7 +29,7 @@ export default function NavigationHome() {
                     </Link>
                 </nav>
 
-                <Link href="/#contact" className="btn btn-outline nav-cta">
+                <Link href={contact.create()} className="btn btn-outline nav-cta">
                     Me contacter
                 </Link>
 
