@@ -29,6 +29,12 @@ class ProjectSeeder extends Seeder
                 'repo_url' => null,
                 'is_featured' => true,
                 'stack' => ['Laravel', 'Inertia.js', 'React', 'TypeScript', 'shadcn/ui', 'PostgreSQL'],
+                'features' => [
+                    ['title' => 'Dashboard sur-mesure', 'description' => "Suivi en temps réel des statistiques d'affichage des propriétés, gestion des statuts de publication et modération des annonces."],
+                    ['title' => 'Moteur de recherche complexe', 'description' => 'Filtrage multicritères ultra-rapide basé sur la géolocalisation par quartier à Abidjan.'],
+                    ['title' => 'Galeries Premium', 'description' => 'Expérience immersive optimisée pour mobile avec support du glisser-déposer (Drag & Drop) pour le téléversement.'],
+                    ['title' => 'Favoris temps réel', 'description' => 'Système de favoris avec bascule instantanée (optimistic UI) sans rechargement de page.'],
+                ],
             ],
             [
                 'slug' => 'techbook',
@@ -45,7 +51,11 @@ class ProjectSeeder extends Seeder
                 'repo_url' => null,
                 'is_featured' => false,
                 'stack' => ['Laravel', 'React', 'PostgreSQL', 'Docker', 'shadcn/ui'],
-
+                'features' => [
+                    ['title' => 'Suivi Granulaire', 'description' => "Visualisation des niveaux d'expertise par modules techniques via des graphes interactifs."],
+                    ['title' => 'Architecture Multi-utilisateurs', 'description' => 'Authentification via Sanctum avec des requêtes strictement scopées par utilisateur.'],
+                    ['title' => 'Déploiement conteneurisé', 'description' => 'Pipeline Docker complet, déployé en production sur Railway et Render.'],
+                ],
             ],
             [
                 'slug' => 'myuns',
@@ -62,6 +72,11 @@ class ProjectSeeder extends Seeder
                 'repo_url' => null,
                 'is_featured' => false,
                 'stack' => ['React Native', 'Expo'],
+                'features' => [
+                    ['title' => 'Emploi du temps interactif', 'description' => 'Calendrier des cours avec vue semaine/jour via react-native-big-calendar.'],
+                    ['title' => 'Mode Hors-ligne complet', 'description' => "Accès immédiat aux données de l'agenda universitaire même sans couverture internet."],
+                    ['title' => 'Authentification biométrique', 'description' => 'Connexion rapide et sécurisée via empreinte digitale ou reconnaissance faciale.'],
+                ],
             ],
         ];
 
@@ -85,7 +100,7 @@ class ProjectSeeder extends Seeder
                 ]
             );
 
-            // Associe les technologies du projet (création à la volée si elles n'existent pas encore)
+            // Technologies
             $technologyIds = collect($data['stack'])
                 ->map(fn (string $name) => Technology::firstOrCreate(
                     ['name' => $name],
@@ -94,6 +109,16 @@ class ProjectSeeder extends Seeder
                 ->all();
 
             $project->technologies()->sync($technologyIds);
+
+            // Features — reset puis recréation pour rester idempotent
+            $project->features()->delete();
+
+            foreach ($data['features'] as $feature) {
+                $project->features()->create([
+                    'title' => $feature['title'],
+                    'description' => $feature['description'],
+                ]);
+            }
         }
     }
 }

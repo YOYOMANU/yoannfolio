@@ -6,6 +6,7 @@ use App\Models\Trait\HasSlug;
 use App\Models\Trait\HasSortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Override;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -46,6 +47,11 @@ class Project extends Model implements HasMedia
     public function technologies()
     {
         return $this->belongsToMany(Technology::class)->orderBy('sort_order');
+    }
+
+    public function features(): HasMany
+    {
+        return $this->hasMany(ProjectFeature::class)->orderBy('sort_order');
     }
 
     #[Override]

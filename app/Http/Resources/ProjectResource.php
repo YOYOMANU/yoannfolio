@@ -32,6 +32,7 @@ class ProjectResource extends JsonResource
             'status' => $this->resource->status,
             'image' => $this->resource->getFirstMediaUrl('image'),
             'technologies' => TechnologyResource::collection($this->resource->technologies),
+            'features' => ProjectFeatureResource::collection($this->whenLoaded('features')),
         ];
     }
 }

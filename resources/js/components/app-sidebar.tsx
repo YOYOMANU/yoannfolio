@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Code2, Code2Icon, FolderGit2, FolderOpenDotIcon, Grid2X2Check, LayoutGrid } from 'lucide-react';
+import { BookOpen, Code2, Code2Icon, FolderGit2, FolderOpenDotIcon, Grid2X2Check, LayoutGrid, TicketCheckIcon } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -39,7 +39,7 @@ const mainNavItems: NavItem[] = [
         title: 'Categories',
         href: category.index(),
         icon: Grid2X2Check,
-    },
+    }
 ];
 
 const footerNavItems: NavItem[] = [

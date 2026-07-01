@@ -39,6 +39,10 @@ class FormProjectRequest extends FormRequest
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
             'technology_ids' => ['nullable', 'array'],
             'technology_ids.*' => ['integer', 'exists:technologies,id'],
+            'features' => ['array'],
+            'features.*.id' => ['nullable', 'integer', 'exists:project_features,id'],
+            'features.*.title' => ['required', 'string', 'max:255'],
+            'features.*.description' => ['required', 'string'],
         ];
     }
 }

@@ -12,7 +12,7 @@ export type Technology = {
 export type Category = {
     id: string;
     name: string;
-    description: string | null;
+    description?: string;
     technologies: Technology[];
 }
 
@@ -34,7 +34,15 @@ export interface Project {
     status: string;
     image?: string;
     technologies: Technology[];
+    features: ProjectFeature[];
+
 }
+
+export type ProjectFeature = {
+    id: string;
+    title: string;
+    description: string;
+};
 
 export type PreviewState = {
     title: string;

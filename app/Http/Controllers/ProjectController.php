@@ -49,6 +49,7 @@ class ProjectController extends Controller
         //
         $project = Project::create($request->validated());
         $project->technologies()->sync($request->input('technology_ids', []));
+        $this->syncFeatures($project, $request->input('features', []));
         $this->handleImages($project, $request);
 
         return to_route('project.index')->with('success', 'Le projet à été créé avec succès');
@@ -58,7 +59,9 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         return Inertia::render('project/show', [
-            'project' => new ProjectResource($project->load(['technologies', 'media'])),
+            'project' => new ProjectResource(
+                $project->load(['technologies', 'features', 'media'])
+            ),
         ]);
     }
 
@@ -76,7 +79,7 @@ class ProjectController extends Controller
     {
 
         return Inertia::render('project/form', [
-            'Project' => new ProjectResource($project),
+            'Project' => new ProjectResource($project->load(['technologies', 'features', 'media'])),
             'technologies' => Technology::orderBy('name', 'asc')->get(['id', 'name']),
 
         ]);
@@ -89,6 +92,7 @@ class ProjectController extends Controller
     {
         $project->update($request->validated());
         $project->technologies()->sync($request->input('technology_ids', []));
+        $this->syncFeatures($project, $request->input('features', []));
         $this->handleImages($project, $request);
 
         return to_route('project.index')->with('success', 'Le projet à été modifié avec succès');
@@ -101,6 +105,27 @@ class ProjectController extends Controller
         if ($request->hasFile('image')) {
             $project->addMediaFromRequest('image')->toMediaCollection('image');
         }
+    }
+
+    private function syncFeatures(Project $project, array $features): void
+    {
+        $keptIds = [];
+
+        foreach ($features as $index => $feature) {
+            $projectFeature = $project->features()->updateOrCreate(
+                ['id' => $feature['id'] ?? null],
+                [
+                    'title' => $feature['title'],
+                    'description' => $feature['description'],
+                    'sort_order' => $index,
+                ]
+            );
+
+            $keptIds[] = $projectFeature->id;
+        }
+
+        // Supprime les features retirées côté formulaire
+        $project->features()->whereNotIn('id', $keptIds)->delete();
     }
 
     /**

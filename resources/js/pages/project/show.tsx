@@ -50,11 +50,11 @@ function ProjectShow({ project }: Props) {
 
                     <h3>Fonctionnalités clés développées</h3>
                     <div className="flex flex-col gap-4">
-                        {project.technologies.map((tech) => (
-                            <div key={tech.id} className="feature-card">
-                                <h4>{tech.name}</h4>
+                        {project.features.map((feature) => (
+                            <div key={feature.id} className="feature-card">
+                                <h4>{feature.title}</h4>
                                 <p style={{ color: 'var(--muted-foreground)', lineHeight: 1.5 }}>
-                                    {/* {tech.description} */} OUI
+                                    {feature.description}
                                 </p>
                             </div>
                         ))}
@@ -104,6 +104,7 @@ function ProjectShow({ project }: Props) {
                             <div style={{ marginTop: '2rem' }}>
                                 <Link
                                     href={project.repo_url}
+                                    target='blank'
                                     rel="noopener noreferrer"
                                     className="btn btn-primary"
                                     style={{ width: '100%', justifyContent: 'center' }}
