@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\FormTechnologyRequest;
 use App\Http\Resources\TechnologyResource;
 use App\Models\Category;
@@ -11,6 +12,11 @@ use Inertia\Inertia;
 
 class TechnologyController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Technology::class, 'technology');
+    }
+
     /**
      * Display a listing of the resource.
      */

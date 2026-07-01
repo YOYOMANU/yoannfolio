@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import contact from '@/routes/contact';
+import { dashboard } from '@/routes';
+import useAuth from '@/hooks/use-auth';
 
 export default function NavigationHome() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const { user, is_admin } = useAuth();
     const closeMenu = () => setIsMenuOpen(false);
 
     return (
@@ -15,11 +17,11 @@ export default function NavigationHome() {
                 </Link>
 
                 <nav className="nav-links">
-                    <Link href="/#projets" className="nav-link">
-                        Projets
-                    </Link>
                     <Link href="/#stack" className="nav-link">
                         Stack
+                    </Link>
+                    <Link href="/#projets" className="nav-link">
+                        Projets
                     </Link>
                     <Link href="/#apropos" className="nav-link">
                         À propos
@@ -29,48 +31,17 @@ export default function NavigationHome() {
                     </Link>
                 </nav>
 
-                <Link href={contact.create()} className="btn btn-outline nav-cta">
-                    Me contacter
-                </Link>
+                <div className='flex flex-row gap-2'>
 
-                <button
-                    className="nav-toggle"
-                    aria-label="Ouvrir le menu"
-                    aria-expanded={isMenuOpen}
-                    onClick={() => setIsMenuOpen((prev) => !prev)}
-                >
-                    <span className="icon" style={{ display: isMenuOpen ? 'none' : 'inline-flex' }}>
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            width="22"
-                            height="22"
-                        >
-                            <line x1="4" x2="20" y1="6" y2="6" />
-                            <line x1="4" x2="20" y1="12" y2="12" />
-                            <line x1="4" x2="20" y1="18" y2="18" />
-                        </svg>
-                    </span>
-                    <span className="icon" style={{ display: isMenuOpen ? 'inline-flex' : 'none' }}>
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            width="22"
-                            height="22"
-                        >
-                            <path d="M18 6 6 18" />
-                            <path d="m6 6 12 12" />
-                        </svg>
-                    </span>
-                </button>
+                    <Link href={contact.create()} className="btn btn-outline nav-cta">
+                        Me contacter
+                    </Link>
+                    {user && is_admin && (
+                        <Link className="btn btn-primary nav-cta" href={dashboard()}>
+                            Dashboard
+                        </Link>
+                    )}
+                </div>
             </div>
 
             <div className="nav-mobile" id="navMobile" style={{ display: isMenuOpen ? 'block' : 'none' }}>

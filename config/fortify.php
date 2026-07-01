@@ -174,4 +174,15 @@ return [
         ]),
     ],
 
+    'paths' => [
+        'login' => 'admin/dashboard/login',
+        'register' => 'admin/dashboard/register',
+        'logout' => 'admin/dashboardlogout',
+        'forgot-password' => 'admin/dashboard/forgot-password',
+        'reset-password' => 'admin/dashboard/reset-password',
+        'email/verify' => 'admin/dashboard/email/verify',
+        'user/profile-information' => 'admin/dashboard/user/profile-information',
+        'user/password' => 'admin/dashboard/user/password',
+    ],
+
 ];

@@ -9,6 +9,7 @@ import { Loader2, Send, User, Mail, MessageSquare, Tag, Check } from 'lucide-rea
 import { toast } from 'sonner'
 import contact from '@/routes/contact'
 import { ContactForm } from '@/types'
+import confetti from 'canvas-confetti'
 import { WithPublicLayout } from '@/layouts/public-layout'
 
 const fadeUp = {
@@ -46,11 +47,11 @@ function ContactPage() {
             preserveScroll: true,
             onSuccess: () => {
                 setSent(true)
-                // toast.success('Message envoyé avec succès !')
+                confetti()
                 setTimeout(() => {
                     reset()
                     setSent(false)
-                }, 2400)
+                }, 3000)
             },
             onError: () => {
                 toast.error('Une erreur est survenue, vérifie le formulaire.')

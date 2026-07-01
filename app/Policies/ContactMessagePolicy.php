@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\ContactMessage;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ContactMessagePolicy
 {
@@ -13,7 +12,7 @@ class ContactMessagePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class ContactMessagePolicy
      */
     public function view(User $user, ContactMessage $contactMessage): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class ContactMessagePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**

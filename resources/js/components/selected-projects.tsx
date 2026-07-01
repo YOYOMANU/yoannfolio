@@ -1,8 +1,10 @@
-import projects from '@/routes/projects';
+// resources/js/Components/SelectedProjects.jsx
 import { Project } from '@/types';
 import { router } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
 import ProjectList from './project-list';
+import projets from '@/routes/projets';
 
 export const sizeIcon = 18;
 
@@ -10,14 +12,48 @@ type Props = {
     Projects: Project[]
 }
 
+// Configuration de l'apparition globale de la section (Stagger)
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.2, // L'en-tête apparaît, puis la liste des projets suit
+        }
+    }
+} satisfies Variants;
+
+const headerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: [0.215, 0.61, 0.355, 1],
+        },
+    },
+} satisfies Variants;
+
+const arrowVariants = {
+    rest: { x: 0 },
+    hover: { x: 5, transition: { type: "spring", stiffness: 400, damping: 10 } }
+} satisfies Variants;
+
 export default function SelectedProjects({ Projects }: Props) {
-
     return (
-        <section id="projets" className="section">
+        <motion.section
+            id="projets"
+            className="section"
+            style={{ overflow: 'hidden' }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }} // Déclenche la cascade globale au scroll
+            variants={containerVariants}
+        >
             <div className="container">
-
-                {/* Section Head rigoureusement identique à votre HTML avec variables CSS */}
-                <div className="reveal reveal-visible">
+                {/* En-tête de section */}
+                <motion.div variants={headerVariants}>
                     <div className="section-head">
                         <div>
                             <h2 className="font-display">Projets sélectionnés</h2>
@@ -25,21 +61,36 @@ export default function SelectedProjects({ Projects }: Props) {
                         </div>
 
                         {/* Action pour basculer sur la vue globale 'listing' */}
-                        <button
-                            onClick={() => router.visit(projects.listing())}
+                        <motion.button
+                            onClick={() => router.visit(projets.listing())}
                             className="card-link"
-                            style={{ color: 'var(--primary)', fontWeight: 500 }}
+                            style={{
+                                color: 'var(--primary)',
+                                fontWeight: 500,
+                                display: 'inline-flex',
+                                alignItems: 'center', // Corrigé ici
+                                gap: '0.5rem',
+                                cursor: 'pointer',
+                                background: 'transparent',
+                                border: 'none'
+                            }}
+                            initial="rest"
+                            whileHover="hover"
+                            whileTap={{ scale: 0.98 }}
                         >
                             Voir tous les projets
-                            <ArrowRight size={sizeIcon} />
-                        </button>
+                            <motion.span variants={arrowVariants} className="inline-flex items-center">
+                                <ArrowRight size={sizeIcon} />
+                            </motion.span>
+                        </motion.button>
                     </div>
-                </div>
-
-                {/* Grille de projets (.projects-grid) */}
-                <ProjectList Projects={Projects} />
-
+                </motion.div>
             </div>
-        </section>
+
+            {/* Liste/Grille des projets enveloppée pour hériter de la transition de cascade */}
+            <motion.div variants={headerVariants}>
+                <ProjectList Projects={Projects} />
+            </motion.div>
+        </motion.section>
     );
 }

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\ProjectFeature;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ProjectFeaturePolicy
 {
@@ -13,7 +12,7 @@ class ProjectFeaturePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -21,7 +20,7 @@ class ProjectFeaturePolicy
      */
     public function view(User $user, ProjectFeature $projectFeature): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -29,7 +28,7 @@ class ProjectFeaturePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -37,7 +36,7 @@ class ProjectFeaturePolicy
      */
     public function update(User $user, ProjectFeature $projectFeature): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +44,7 @@ class ProjectFeaturePolicy
      */
     public function delete(User $user, ProjectFeature $projectFeature): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -53,7 +52,7 @@ class ProjectFeaturePolicy
      */
     public function restore(User $user, ProjectFeature $projectFeature): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +60,6 @@ class ProjectFeaturePolicy
      */
     public function forceDelete(User $user, ProjectFeature $projectFeature): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 }

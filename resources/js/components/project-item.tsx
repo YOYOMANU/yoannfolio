@@ -2,7 +2,7 @@ import { Project } from "@/types";
 import { sizeIcon } from "./selected-projects";
 import { ArrowRight } from "lucide-react";
 import { router } from "@inertiajs/react";
-import projects from "@/routes/projects";
+import projets from "@/routes/projets";
 
 type Props = {
     project: Project;
@@ -40,7 +40,7 @@ export default function ProjectItem({ project }: Props) {
 
             {/* Lien vers le détail du projet */}
             <button
-                onClick={() => router.visit(projects.show(project))}
+                onClick={() => router.visit(projets.show(project))}
                 className="card-link group"
                 style={{ marginTop: 'auto', alignSelf: 'flex-start', color: 'var(--foreground)' }}
             >

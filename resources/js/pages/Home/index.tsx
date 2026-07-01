@@ -6,15 +6,18 @@ import SelectedProjects from "@/components/selected-projects";
 import StackSection from "@/components/stack-section";
 import { WithPublicLayout } from "@/layouts/public-layout"
 import { Category, Project } from "@/types";
+import confetti from "canvas-confetti";
+import { useEffect } from "react";
 
 type Props = {
     categories: Category[];
     Projects: Project[];
 }
 
+
+
 function Home({ categories, Projects }: Props) {
-
-
+    confetti({ particleCount: 150, spread: 100 })
     return (
         <>
             <Hero />

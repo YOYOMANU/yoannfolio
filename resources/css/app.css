@@ -171,6 +171,9 @@
 }
 
 @layer components {
+    html {
+        scroll-behavior: smooth;
+    }
     /* HTML Elements Elements Base overrides */
     a {
         text-decoration: none;

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Technology;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TechnologyPolicy
 {
@@ -13,7 +12,7 @@ class TechnologyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -21,7 +20,7 @@ class TechnologyPolicy
      */
     public function view(User $user, Technology $technology): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -29,7 +28,7 @@ class TechnologyPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -37,7 +36,7 @@ class TechnologyPolicy
      */
     public function update(User $user, Technology $technology): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +44,7 @@ class TechnologyPolicy
      */
     public function delete(User $user, Technology $technology): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -53,7 +52,7 @@ class TechnologyPolicy
      */
     public function restore(User $user, Technology $technology): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +60,6 @@ class TechnologyPolicy
      */
     public function forceDelete(User $user, Technology $technology): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 }
