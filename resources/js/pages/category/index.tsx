@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/table';
 import type { BreadcrumbItem, Category, PaginatedCollection, Technology } from '@/types';
 import technology from '@/routes/technology';
-import WithAppLayout from '@/layouts/app-layout';
+import { WithAppLayout } from '@/layouts/app-layout';
 import category from '@/routes/category';
 import {
     AlertDialog,

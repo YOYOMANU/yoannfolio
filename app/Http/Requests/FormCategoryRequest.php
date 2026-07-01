@@ -23,6 +23,7 @@ class FormCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:4'],
+            'description' => ['required', 'string', 'min:4'],
         ];
     }
 }

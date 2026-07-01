@@ -7,9 +7,9 @@ import { Input } from '@/components/ui/input';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { BreadcrumbItem, Technology, Category } from '@/types';
 import technology from '@/routes/technology';
-import WithAppLayout from '@/layouts/app-layout';
 import { SaveIcon } from 'lucide-react';
 import { ImageInput } from '@/components/ui/image-input';
+import { WithAppLayout } from '@/layouts/app-layout';
 
 type Props = {
     Technology: Technology;
@@ -21,6 +21,7 @@ const Breadcrumbs: BreadcrumbItem[] = [
 ];
 
 function TechnologyEditPage({ Technology, categories }: Props) {
+
     const action = Technology.id
         ? technology.update.form({ technology: parseInt(Technology.id) })
         : technology.store.form();
@@ -36,6 +37,8 @@ function TechnologyEditPage({ Technology, categories }: Props) {
         value: c.id,
         label: c.name,
     }));
+
+
 
     return (
         <Form {...action}>

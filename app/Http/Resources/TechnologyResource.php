@@ -19,7 +19,7 @@ class TechnologyResource extends JsonResource
             'name' => $this->resource->name,
             'slug' => $this->resource->slug,
             'image' => $this->resource->getFirstMediaUrl('image'),
-            'categories' => CategoryResource::collection($this->resource->categories),
+            'categories' => CategoryResource::collection($this->whenLoaded('categories')),
         ];
     }
 }

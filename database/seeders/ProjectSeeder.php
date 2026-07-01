@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
@@ -28,11 +29,6 @@ class ProjectSeeder extends Seeder
                 'repo_url' => null,
                 'is_featured' => true,
                 'stack' => ['Laravel', 'Inertia.js', 'React', 'TypeScript', 'shadcn/ui', 'PostgreSQL'],
-                'features' => [
-                    ['title' => 'Dashboard sur-mesure', 'description' => "Suivi en temps réel des statistiques d'affichage des propriétés, gestion des statuts de publication et modération des annonces."],
-                    ['title' => 'Moteur de recherche complexe', 'description' => 'Filtrage multicritères ultra-rapide basé sur la géolocalisation par quartier à Abidjan.'],
-                    ['title' => 'Galeries Premium', 'description' => 'Expérience immersive optimisée pour mobile avec support du glisser-déposer (Drag & Drop) pour le téléversement.'],
-                ],
             ],
             [
                 'slug' => 'techbook',
@@ -48,11 +44,8 @@ class ProjectSeeder extends Seeder
                 'live_url' => null,
                 'repo_url' => null,
                 'is_featured' => false,
-                'stack' => ['Laravel', 'React', 'PostgreSQL', 'Docker', 'MongoDB'],
-                'features' => [
-                    ['title' => 'Suivi Granulaire', 'description' => "Visualisation des niveaux d'expertise par modules techniques via des graphes interactifs."],
-                    ['title' => 'Architecture Hybride', 'description' => 'Utilisation astucieuse de structures relationnelles PostgreSQL combinées à un cluster MongoDB Atlas pour la flexibilité des schémas de logs.'],
-                ],
+                'stack' => ['Laravel', 'React', 'PostgreSQL', 'Docker', 'shadcn/ui'],
+
             ],
             [
                 'slug' => 'myuns',
@@ -68,11 +61,7 @@ class ProjectSeeder extends Seeder
                 'live_url' => null,
                 'repo_url' => null,
                 'is_featured' => false,
-                'stack' => ['React Native', 'Expo', 'Kotlin', 'Android'],
-                'features' => [
-                    ['title' => 'Double implémentation', 'description' => "Développement d'une version cross-platform agile (React Native) et d'un noyau natif performant (Kotlin)."],
-                    ['title' => 'Mode Hors-ligne complet', 'description' => "Accès immédiat aux données de l'agenda universitaire même sans couverture internet."],
-                ],
+                'stack' => ['React Native', 'Expo'],
             ],
         ];
 
@@ -95,6 +84,16 @@ class ProjectSeeder extends Seeder
                     'status' => 'published',
                 ]
             );
+
+            // Associe les technologies du projet (création à la volée si elles n'existent pas encore)
+            $technologyIds = collect($data['stack'])
+                ->map(fn (string $name) => Technology::firstOrCreate(
+                    ['name' => $name],
+                    ['slug' => str($name)->slug()]
+                )->id)
+                ->all();
+
+            $project->technologies()->sync($technologyIds);
         }
     }
 }

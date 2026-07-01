@@ -16,9 +16,9 @@ import {
 import type { BreadcrumbItem, PaginatedCollection, Technology } from '@/types';
 import { JSX } from 'react/jsx-runtime';
 import technology from '@/routes/technology';
-import WithAppLayout from '@/layouts/app-layout';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useState } from 'react';
+import { WithAppLayout } from '@/layouts/app-layout';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
@@ -42,6 +42,8 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
             onFinish: () => setTechnologyToDelete(null),
         });
     };
+
+
 
     return (
         <div className="space-y-4">

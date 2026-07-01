@@ -17,6 +17,8 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
+            'description' => $this->resource->description,
+            'technologies' => TechnologyResource::collection($this->whenLoaded('technologies')),
         ];
     }
 }

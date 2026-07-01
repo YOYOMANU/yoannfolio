@@ -12,6 +12,8 @@ export type Technology = {
 export type Category = {
     id: string;
     name: string;
+    description: string | null;
+    technologies: Technology[];
 }
 
 export interface Project {
@@ -26,8 +28,8 @@ export interface Project {
     role: string;
     context: string;
     swatch_class: string;
-    live_url: string;
-    repo_url: string;
+    live_url?: string;
+    repo_url?: string;
     is_featured: boolean;
     status: string;
     image?: string;

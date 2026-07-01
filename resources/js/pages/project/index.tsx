@@ -16,7 +16,7 @@ import {
 import type { BreadcrumbItem, PaginatedCollection, Project, Technology } from '@/types';
 import { JSX } from 'react/jsx-runtime';
 import technology from '@/routes/technology';
-import WithAppLayout from '@/layouts/app-layout';
+import { WithAppLayout } from '@/layouts/app-layout';
 import project from '@/routes/project';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useState } from 'react';

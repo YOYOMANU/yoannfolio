@@ -1,17 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
-import { BreadcrumbItem } from '@/types';
-import WithAppLayout from '@/layouts/app-layout';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-    },
-];
-
-function Dashboard() {
+export default function Dashboard() {
     return (
         <>
             <Head title="Dashboard" />
@@ -35,4 +26,11 @@ function Dashboard() {
     );
 }
 
-export default WithAppLayout(breadcrumbs, Dashboard);
+Dashboard.layout = {
+    breadcrumbs: [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+        },
+    ],
+};

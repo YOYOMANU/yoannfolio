@@ -16,7 +16,7 @@ class TechnologyController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Technology::query()->orderFromRequest($request);
+        $query = Technology::with(['categories', 'media'])->orderFromRequest($request);
         $search = $request->get('q');
         if ($search) {
             $query->where('name', 'like', '%'.$search.'%');
@@ -59,7 +59,7 @@ class TechnologyController extends Controller
     public function edit(Technology $technology)
     {
         return Inertia::render('technology/form', [
-            'Technology' => new TechnologyResource($technology),
+            'Technology' => new TechnologyResource($technology->load(['categories', 'media'])),
             'categories' => Category::orderBy('name', 'asc')->get(['id', 'name']),
         ]);
 

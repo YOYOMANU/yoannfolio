@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { FormField } from '@/components/ui/form-field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import WithAppLayout from '@/layouts/app-layout';
+import { WithAppLayout } from '@/layouts/app-layout';
 import { cn } from '@/lib/utils';
 import { BreadcrumbItem, PreviewState, Project, SelectOption, Technology } from '@/types';
 import project from '@/routes/project';
@@ -41,6 +41,8 @@ const statusOptions: SelectOption[] = [
 ]
 
 function ProjectEditPage({ Project, technologies }: Props) {
+    console.log(Project);
+
     const action = Project.id
         ? project.update.form({ project: parseInt(Project.id) })
         : project.store.form();

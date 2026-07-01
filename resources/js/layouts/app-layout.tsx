@@ -3,12 +3,12 @@ import type { BreadcrumbItem } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { SharedPageProps } from '@inertiajs/core'
 import { type FC, ReactNode, useEffect } from 'react';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 
 interface AppLayoutProps {
+    children: ReactNode;
     breadcrumbs?: BreadcrumbItem[];
-    children: React.ReactNode;
 }
 
 const AppLayout = ({
@@ -18,9 +18,7 @@ const AppLayout = ({
 }: AppLayoutProps) => {
 
     const page = usePage<SharedPageProps>();
-
     useEffect(() => {
-
         if (page.props.flash.success) {
             toast.success(page.props.flash.success);
         }
@@ -38,7 +36,10 @@ const AppLayout = ({
     );
 }
 
-function WithAppLayout<T>(breadcrumbs: BreadcrumbItem[], component: FC<T>) {
+export function WithAppLayout<T>(
+    breadcrumbs: BreadcrumbItem[],
+    component: FC<T>,
+) {
     //@ts-expect-error layout exist for inertia
     component.layout = (page: ReactNode) => (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -49,4 +50,4 @@ function WithAppLayout<T>(breadcrumbs: BreadcrumbItem[], component: FC<T>) {
     return component;
 }
 
-export default WithAppLayout;
+export default AppLayout;

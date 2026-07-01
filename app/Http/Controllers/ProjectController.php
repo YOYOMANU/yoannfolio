@@ -55,6 +55,20 @@ class ProjectController extends Controller
 
     }
 
+    public function show(Project $project)
+    {
+        return Inertia::render('project/show', [
+            'project' => new ProjectResource($project->load(['technologies', 'media'])),
+        ]);
+    }
+
+    public function projects()
+    {
+        return Inertia::render('project/listing', [
+            'Projects' => ProjectResource::collection(Project::all()),
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

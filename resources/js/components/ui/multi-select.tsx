@@ -48,12 +48,21 @@ export function MultiSelect({
 
     return (
         <div ref={ref} className={cn('relative', className)} id={id}>
-            {/* Trigger */}
-            <button
-                type="button"
+            {/* Trigger — div+role="button" au lieu de <button> pour éviter l'imbrication avec les boutons "x" internes */}
+            <div
+                role="button"
+                tabIndex={0}
+                aria-haspopup="listbox"
+                aria-expanded={open}
                 onClick={() => setOpen((o) => !o)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setOpen((o) => !o);
+                    }
+                }}
                 className={cn(
-                    'flex min-h-9 w-full flex-wrap items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm ring-offset-background',
+                    'flex min-h-9 w-full cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm ring-offset-background',
                     'transition-colors hover:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                     open && 'border-ring ring-2 ring-ring',
                 )}
@@ -83,7 +92,7 @@ export function MultiSelect({
                         open && 'rotate-180',
                     )}
                 />
-            </button>
+            </div>
 
             {/* Dropdown */}
             {open && (
