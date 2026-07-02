@@ -16,7 +16,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Project extends Model implements HasMedia
 {
     /** @use HasFactory<ProjectFactory> */
-    use HasFactory, HasSlug, HasSortable, InteractsWithMedia;
+    use HasFactory, HasSlug, InteractsWithMedia;
+
+    use HasSortable;
 
     protected $fillable = [
         'title',
@@ -46,12 +48,12 @@ class Project extends Model implements HasMedia
 
     public function technologies()
     {
-        return $this->belongsToMany(Technology::class)->orderBy('sort_order');
+        return $this->belongsToMany(Technology::class);
     }
 
     public function features(): HasMany
     {
-        return $this->hasMany(ProjectFeature::class)->orderBy('sort_order');
+        return $this->hasMany(ProjectFeature::class);
     }
 
     #[Override]

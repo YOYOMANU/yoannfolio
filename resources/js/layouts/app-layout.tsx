@@ -19,12 +19,12 @@ const AppLayout = ({
 
     const page = usePage<SharedPageProps>();
     useEffect(() => {
-        if (page.props.flash.success) {
-            toast.success(page.props.flash.success);
+        if (page.props.flash?.success) {
+            toast.success(page.props.flash?.success);
         }
 
-        if (page.props.flash.error) {
-            toast.error(page.props.flash.error)
+        if (page.props.flash?.error) {
+            toast.error(page.props.flash?.error)
         }
 
     }, [page.props.flash]);

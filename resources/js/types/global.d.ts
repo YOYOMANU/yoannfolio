@@ -12,10 +12,10 @@ declare module '@inertiajs/core' {
         sharedPageProps: {
             name: string;
             auth: Auth;
-            flash: {
+            flash?: {
                 success?: string;
                 error?: string;
-            }
+            };
             previousUrl?: string;
             sidebarOpen: boolean;
             [key: string]: unknown;

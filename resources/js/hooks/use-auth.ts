@@ -1,9 +1,15 @@
 import { usePage } from "@inertiajs/react";
+import { User } from "@/types";
 
-export default function useAuth() {
-    const { auth } = usePage().props
+type PageProps = {
+    auth: { user: User | null };
+};
+
+export function useAuth() {
+    const { auth } = usePage<PageProps>().props;
     return {
         user: auth.user,
-        is_admin: auth.user?.role === 'admin'
-    }
+        isLoggedIn: !!auth.user,
+        is_admin: auth?.user?.role === 'admin'
+    };
 }

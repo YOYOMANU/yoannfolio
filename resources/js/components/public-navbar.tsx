@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import contact from '@/routes/contact';
 import { dashboard } from '@/routes';
-import useAuth from '@/hooks/use-auth';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function NavigationHome() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
