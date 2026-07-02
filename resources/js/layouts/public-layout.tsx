@@ -1,9 +1,9 @@
 import type { SharedPageProps } from '@inertiajs/core';
 import { usePage } from "@inertiajs/react";
 import { AnimatePresence, motion } from "framer-motion";
-import {  useEffect } from "react";
-import type { ReactNode} from "react";
-import type {FC} from "react";
+import { useEffect } from "react";
+import type { ReactNode } from "react";
+import type { FC } from "react";
 import { toast } from "sonner";
 import NavigationHome from "@/components/public-navbar";
 import { Toaster } from "@/components/ui/sonner";
@@ -30,21 +30,9 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
     return (
         <div className="flex min-h-screen flex-col">
             <NavigationHome />
-            <AnimatePresence mode="popLayout">
-                <motion.main
-                    className="flex-1"
-                    key={page.url}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                >
-                    {children}
-                </motion.main>
-            </AnimatePresence>
+            {children}
             <Footer />
             <Toaster richColors position="top-center" closeButton />
-
         </div>
     )
 }
