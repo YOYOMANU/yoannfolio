@@ -15,7 +15,7 @@ type Props = {
 
 
 function Home({ categories, Projects }: Props) {
-    confetti({ particleCount: 150, spread: 100 })
+    confetti({ particleCount: 150, spread: 90 })
 
     return (
         <>
