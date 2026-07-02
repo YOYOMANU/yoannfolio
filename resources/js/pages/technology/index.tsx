@@ -1,7 +1,9 @@
 import { Form, Link, router } from '@inertiajs/react';
 import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 import { SortableTableHead } from '@/components/sortable-table-head';
 import { TopAction } from '@/components/top-action';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { CollectionPagination } from '@/components/ui/Collection-Pagination';
 import { Input } from '@/components/ui/input';
@@ -13,12 +15,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import type { BreadcrumbItem, PaginatedCollection, Technology } from '@/types';
-import { JSX } from 'react/jsx-runtime';
-import technology from '@/routes/technology';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-import { useState } from 'react';
 import { WithAppLayout } from '@/layouts/app-layout';
+import technology from '@/routes/technology';
+import type { BreadcrumbItem, PaginatedCollection, Technology } from '@/types';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
@@ -36,7 +35,9 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
     const [technologyToDelete, setTechnologyToDelete] = useState<number | null>(null);
 
     const handleDelete = () => {
-        if (technologyToDelete === null) return;
+        if (technologyToDelete === null) {
+            return;
+        }
 
         router.delete(technology.destroy({ technology: technologyToDelete }).url, {
             onFinish: () => setTechnologyToDelete(null),

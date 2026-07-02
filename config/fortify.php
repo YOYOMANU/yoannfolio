@@ -176,13 +176,26 @@ return [
 
     'paths' => [
         'login' => 'admin/dashboard/login',
+        'logout' => 'admin/dashboard/logout', // slash corrigé
         'register' => 'admin/dashboard/register',
-        'logout' => 'admin/dashboardlogout',
-        'forgot-password' => 'admin/dashboard/forgot-password',
-        'reset-password' => 'admin/dashboard/reset-password',
-        'email/verify' => 'admin/dashboard/email/verify',
-        'user/profile-information' => 'admin/dashboard/user/profile-information',
-        'user/password' => 'admin/dashboard/user/password',
+        'password' => [
+            'request' => 'admin/dashboard/forgot-password',
+            'reset' => 'admin/dashboard/reset-password',
+            'email' => null,
+            'update' => null,
+            'confirm' => null,
+            'confirmation' => null,
+        ],
+        'verification' => [
+            'notice' => 'admin/dashboard/email/verify',
+            'verify' => null,
+            'send' => null,
+        ],
+        'user-profile-information' => [
+            'update' => 'admin/dashboard/user/profile-information',
+        ],
+        'user-password' => [
+            'update' => 'admin/dashboard/user/password',
+        ],
     ],
-
 ];

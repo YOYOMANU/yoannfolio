@@ -1,16 +1,18 @@
 import { useForm } from '@inertiajs/react'
-import { FormEventHandler, useMemo, useState } from 'react'
-import { motion, AnimatePresence, Variants } from 'framer-motion'
+import confetti from 'canvas-confetti'
+import type { Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'
+import { Loader2, Send, User, Mail, MessageSquare, Tag, Check } from 'lucide-react'
+import type { FormEventHandler} from 'react';
+import { useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Loader2, Send, User, Mail, MessageSquare, Tag, Check } from 'lucide-react'
-import { toast } from 'sonner'
-import contact from '@/routes/contact'
-import { ContactForm } from '@/types'
-import confetti from 'canvas-confetti'
 import { WithPublicLayout } from '@/layouts/public-layout'
+import contact from '@/routes/contact'
+import type { ContactForm } from '@/types'
 
 const fadeUp = {
     hidden: { opacity: 0, y: 16 },
@@ -37,6 +39,7 @@ function ContactPage() {
     const progress = useMemo(() => {
         const required = [data.name, data.email, data.message]
         const filled = required.filter((v) => v.trim().length > 0).length
+
         return Math.round((filled / required.length) * 100)
     }, [data.name, data.email, data.message])
 

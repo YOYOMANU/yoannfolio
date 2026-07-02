@@ -3,6 +3,16 @@ import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import { SortableTableHead } from '@/components/sortable-table-head';
 import { TopAction } from '@/components/top-action';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { CollectionPagination } from '@/components/ui/Collection-Pagination';
 import { Input } from '@/components/ui/input';
@@ -14,20 +24,10 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import type { BreadcrumbItem, Category, PaginatedCollection, Technology } from '@/types';
-import technology from '@/routes/technology';
 import { WithAppLayout } from '@/layouts/app-layout';
 import category from '@/routes/category';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import technology from '@/routes/technology';
+import type { BreadcrumbItem, Category, PaginatedCollection } from '@/types';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
@@ -45,7 +45,9 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
     const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null);
 
     const handleDelete = () => {
-        if (categoryToDelete === null) return;
+        if (categoryToDelete === null) {
+            return;
+        }
 
         router.delete(category.destroy({ category: categoryToDelete }).url, {
             onFinish: () => setCategoryToDelete(null),

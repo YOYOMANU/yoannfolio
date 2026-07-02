@@ -1,10 +1,11 @@
 // resources/js/Components/ProjectShow.jsx
+import type { SharedPageProps } from '@inertiajs/core';
 import { Link, usePage } from '@inertiajs/react';
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { Project } from '@/types';
 import { WithPublicLayout } from '@/layouts/public-layout';
-import { SharedPageProps } from '@inertiajs/core';
-import { motion, Variants } from 'framer-motion';
+import type { Project } from '@/types';
 
 export const sizeIcon = 16;
 

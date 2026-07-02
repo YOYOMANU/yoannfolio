@@ -1,6 +1,7 @@
 // resources/js/Components/ProjectList.jsx
-import { Project } from "@/types"
-import { motion, Variants } from "framer-motion"
+import type { Variants } from "framer-motion";
+import { motion } from "framer-motion"
+import type { Project } from "@/types"
 import ProjectItem from "./project-item"
 
 type Props = {

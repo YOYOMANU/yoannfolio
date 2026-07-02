@@ -1,9 +1,10 @@
+import type { SharedPageProps } from '@inertiajs/core'
+import { usePage } from '@inertiajs/react';
+import { useEffect } from 'react';
+import type {FC,  ReactNode} from 'react';
+import { toast } from 'sonner';
 import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
 import type { BreadcrumbItem } from '@/types';
-import { usePage } from '@inertiajs/react';
-import { SharedPageProps } from '@inertiajs/core'
-import { type FC, ReactNode, useEffect } from 'react';
-import { toast } from 'sonner';
 
 
 interface AppLayoutProps {

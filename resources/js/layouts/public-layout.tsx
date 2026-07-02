@@ -1,10 +1,12 @@
+import type { SharedPageProps } from '@inertiajs/core';
 import { usePage } from "@inertiajs/react";
-import { type FC, ReactNode, useEffect } from "react";
-import { SharedPageProps } from '@inertiajs/core';
-import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
-import { Toaster } from "@/components/ui/sonner";
+import {  useEffect } from "react";
+import type { ReactNode} from "react";
+import type {FC} from "react";
+import { toast } from "sonner";
 import NavigationHome from "@/components/public-navbar";
+import { Toaster } from "@/components/ui/sonner";
 import Footer from "../components/footer";
 
 interface PublicLayoutProps {

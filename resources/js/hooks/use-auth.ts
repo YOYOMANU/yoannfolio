@@ -1,5 +1,5 @@
 import { usePage } from "@inertiajs/react";
-import { User } from "@/types";
+import type { User } from "@/types";
 
 type PageProps = {
     auth: { user: User | null };
@@ -7,6 +7,7 @@ type PageProps = {
 
 export function useAuth() {
     const { auth } = usePage<PageProps>().props;
+
     return {
         user: auth.user,
         isLoggedIn: !!auth.user,

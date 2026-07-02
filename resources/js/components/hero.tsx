@@ -1,10 +1,11 @@
 import { Link } from '@inertiajs/react';
+import { motion  } from 'framer-motion';
+import type {Variants} from 'framer-motion';
 import { ArrowRight, GraduationCap, Layers, Users } from 'lucide-react';
-import { motion, type Variants } from 'framer-motion';
-import { sizeIcon } from './selected-projects';
 import PhotoProfil from '@/assets/image4.jpg';
 import contact from '@/routes/contact';
 import projets from '@/routes/projets';
+import { sizeIcon } from './selected-projects';
 
 // Configuration de l'animation en cascade pour le texte (Conteneur principal)
 const containerVariants = {

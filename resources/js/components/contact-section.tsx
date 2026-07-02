@@ -1,9 +1,10 @@
 // resources/js/Components/ContactSection.jsx
-import { GithubIcon, MailIcon } from 'lucide-react';
-import { sizeIcon } from './selected-projects';
 import { Link } from '@inertiajs/react';
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { GithubIcon, MailIcon } from 'lucide-react';
 import contact from '@/routes/contact';
-import { motion, Variants } from 'framer-motion';
+import { sizeIcon } from './selected-projects';
 
 // Configuration de la cascade d'apparition au scroll
 const containerVariants = {

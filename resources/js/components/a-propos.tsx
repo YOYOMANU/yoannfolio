@@ -1,8 +1,9 @@
 // resources/js/Components/Apropos.jsx
-import contact from '@/routes/contact';
 import { Link } from '@inertiajs/react';
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { motion, Variants } from 'framer-motion';
+import contact from '@/routes/contact';
 
 // Configuration de la cascade d'apparition au scroll
 const containerVariants = {

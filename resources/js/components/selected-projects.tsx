@@ -1,10 +1,11 @@
 // resources/js/Components/SelectedProjects.jsx
-import { Project } from '@/types';
 import { router } from '@inertiajs/react';
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { motion, Variants } from 'framer-motion';
-import ProjectList from './project-list';
 import projets from '@/routes/projets';
+import type { Project } from '@/types';
+import ProjectList from './project-list';
 
 export const sizeIcon = 18;
 

@@ -1,15 +1,15 @@
 // resources/js/pages/technology/form.tsx
 import { Form, useForm } from '@inertiajs/react';
+import { SaveIcon } from 'lucide-react';
 import { TopAction } from '@/components/top-action';
 import { Button } from '@/components/ui/button';
 import { FormField } from '@/components/ui/form-field';
+import { ImageInput } from '@/components/ui/image-input';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from '@/components/ui/multi-select';
-import { BreadcrumbItem, Technology, Category } from '@/types';
-import technology from '@/routes/technology';
-import { SaveIcon } from 'lucide-react';
-import { ImageInput } from '@/components/ui/image-input';
 import { WithAppLayout } from '@/layouts/app-layout';
+import technology from '@/routes/technology';
+import type { BreadcrumbItem, Technology, Category } from '@/types';
 
 type Props = {
     Technology: Technology;

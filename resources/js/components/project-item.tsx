@@ -1,8 +1,8 @@
-import { Project } from "@/types";
-import { sizeIcon } from "./selected-projects";
-import { ArrowRight } from "lucide-react";
 import { router } from "@inertiajs/react";
+import { ArrowRight } from "lucide-react";
 import projets from "@/routes/projets";
+import type { Project } from "@/types";
+import { sizeIcon } from "./selected-projects";
 
 type Props = {
     project: Project;

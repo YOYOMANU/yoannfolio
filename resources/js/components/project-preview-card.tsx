@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
-import { PreviewState } from "@/types";
 import { motion } from "framer-motion";
 import { ExternalLinkIcon, GithubIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { PreviewState } from "@/types";
 
 const STATUS_META: Record<string, { label: string; dot: string }> = {
     draft: { label: 'Brouillon', dot: 'bg-zinc-500' },

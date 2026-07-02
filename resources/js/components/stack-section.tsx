@@ -1,8 +1,9 @@
 // resources/js/Components/StackSection.jsx
-import { Category } from '@/types';
+import type { Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import type { Category } from '@/types';
 
 type Props = {
     categories: Category[];
@@ -95,6 +96,7 @@ export default function StackSection({ categories }: Props) {
                     <motion.div className="lg:col-span-7 flex flex-col gap-4" variants={containerVariants}>
                         {categories.map((c, idx) => {
                             const isActive = c.id === activeId;
+
                             return (
                                 <motion.div
                                     key={c.id}

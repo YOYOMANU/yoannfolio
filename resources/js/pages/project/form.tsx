@@ -1,14 +1,4 @@
-import { useEffect, useState } from 'react';
 import { Form, useForm } from '@inertiajs/react';
-import { TopAction } from '@/components/top-action';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { FormField } from '@/components/ui/form-field';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { WithAppLayout } from '@/layouts/app-layout';
-import { BreadcrumbItem, PreviewState, Project, SelectOption, Technology } from '@/types';
-import project from '@/routes/project';
 import {
     SaveIcon,
     ImageIcon,
@@ -17,12 +7,23 @@ import {
     BookOpen,
     Settings2,
 } from 'lucide-react';
-import { ImageInput } from '@/components/ui/image-input';
-import Section from '@/components/section';
+import { useEffect, useState } from 'react';
 import ProjectPreviewCard from '@/components/project-preview-card';
-import { SelectWithItems } from '@/components/ui/select-with-items';
+import Section from '@/components/section';
+import { TopAction } from '@/components/top-action';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import type { FeatureInput} from '@/components/ui/feature-list-input';
+import { FeatureListInput } from '@/components/ui/feature-list-input';
+import { FormField } from '@/components/ui/form-field';
+import { ImageInput } from '@/components/ui/image-input';
+import { Input } from '@/components/ui/input';
 import { MultiSelect } from '@/components/ui/multi-select';
-import { FeatureInput, FeatureListInput } from '@/components/ui/feature-list-input';
+import { SelectWithItems } from '@/components/ui/select-with-items';
+import { Textarea } from '@/components/ui/textarea';
+import { WithAppLayout } from '@/layouts/app-layout';
+import project from '@/routes/project';
+import type { BreadcrumbItem, PreviewState, Project, SelectOption, Technology } from '@/types';
 
 const Breadcrumbs: BreadcrumbItem[] = [
     { title: 'Projet', href: project.index().url },
@@ -64,7 +65,10 @@ function ProjectEditPage({ Project, technologies }: Props) {
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) updatePreview('image', URL.createObjectURL(file));
+
+        if (file) {
+updatePreview('image', URL.createObjectURL(file));
+}
     };
 
     const defaultTechnologies = Project.technologies?.map((t) => t.id) ?? [];
