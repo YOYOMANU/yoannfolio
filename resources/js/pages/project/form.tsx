@@ -13,7 +13,7 @@ import Section from '@/components/section';
 import { TopAction } from '@/components/top-action';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import type { FeatureInput} from '@/components/ui/feature-list-input';
+import type { FeatureInput } from '@/components/ui/feature-list-input';
 import { FeatureListInput } from '@/components/ui/feature-list-input';
 import { FormField } from '@/components/ui/form-field';
 import { ImageInput } from '@/components/ui/image-input';
@@ -42,6 +42,7 @@ const statusOptions: SelectOption[] = [
 ];
 
 function ProjectEditPage({ Project, technologies }: Props) {
+
     const action = Project.id
         ? project.update.form({ project: parseInt(Project.id) })
         : project.store.form();
@@ -67,8 +68,8 @@ function ProjectEditPage({ Project, technologies }: Props) {
         const file = e.target.files?.[0];
 
         if (file) {
-updatePreview('image', URL.createObjectURL(file));
-}
+            updatePreview('image', URL.createObjectURL(file));
+        }
     };
 
     const defaultTechnologies = Project.technologies?.map((t) => t.id) ?? [];

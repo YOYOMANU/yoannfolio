@@ -13,7 +13,9 @@ export default function ProjectItem({ project }: Props) {
         className={`project-card ${project.is_featured ? 'featured' : ''}`}
     >
         {/* Échantillon visuel dynamique injecté par vos classes CSS (.swatch-*) */}
-        <div className={`swatch ${project.swatch_class}`} style={{ background: project.image ? `url(${project.image}) center center/cover` : '' }}></div>
+        <div className={`swatch ${project.swatch_class}`}>
+            {project.image && <img src={project.image} alt={project.title} />}
+        </div>
 
         {/* Contenu textuel de la carte */}
         <div className="project-body">

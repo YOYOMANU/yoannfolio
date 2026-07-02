@@ -649,24 +649,55 @@
         display: flex;
         justify-content: center;
     }
+
+    .photo-frame {
+        position: relative;
+        padding: 14px;
+    }
+
     .photo-container {
         position: relative;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
+        width: 340px;
+        height: 340px;
+        border-radius: 24px;
         overflow: hidden;
-        border: 3px solid var(--primary);
-        box-shadow: 0 0 40px rgba(232, 163, 61, 0.2);
-        transition: all 0.3s ease;
         background: var(--secondary);
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow:
+            0 20px 60px -15px rgba(0, 0, 0, 0.6),
+            0 0 0 1px rgba(201, 162, 39, 0.15),
+            0 0 50px rgba(232, 163, 61, 0.15);
+        transition: box-shadow 0.3s ease;
     }
+
     .photo-container:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 60px rgba(232, 163, 61, 0.4);
+        box-shadow:
+            0 25px 70px -15px rgba(0, 0, 0, 0.65),
+            0 0 0 1px rgba(201, 162, 39, 0.25),
+            0 0 70px rgba(232, 163, 61, 0.3);
     }
+
+    .photo-container::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            transparent 60%,
+            rgba(0, 0, 0, 0.35) 100%
+        );
+        pointer-events: none;
+    }
+
+    .photo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
     .photo-placeholder {
         width: 100%;
         height: 100%;
@@ -675,22 +706,49 @@
         justify-content: center;
         background: var(--gradient-surface);
         color: var(--primary);
-        font-size: 4rem;
+        font-size: 5rem;
         font-family: 'Fraunces', serif;
     }
-    .photo-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+
+    /* Coins dorés façon "certificat" éditorial */
+    .frame-corner {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        border: 1.5px solid var(--sh-accent, #c9a227);
+        opacity: 0.7;
+    }
+    .frame-corner.tl {
+        top: 0;
+        left: 0;
+        border-right: none;
+        border-bottom: none;
+    }
+    .frame-corner.br {
+        bottom: 0;
+        right: 0;
+        border-left: none;
+        border-top: none;
     }
 
     /* Case Studies Swatches */
     .swatch {
         width: 100%;
+        height: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .swatch img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
     }
     .swatch-shoplite {
         position: relative;
-        height: 220px;
         background: linear-gradient(
             135deg,
             #1c140d 0%,
@@ -709,7 +767,6 @@
         );
     }
     .swatch-techbook {
-        height: 160px;
         background:
             linear-gradient(135deg, #11151c 0%, #1b212c 100%),
             repeating-linear-gradient(
@@ -729,7 +786,6 @@
     }
     .swatch-myuns {
         position: relative;
-        height: 160px;
         background: linear-gradient(
             135deg,
             #101620 0%,
