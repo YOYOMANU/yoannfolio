@@ -8,6 +8,14 @@ envsubst '$PORT' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 cd /var/www/html
 
+# ---- Fix permissions du volume monté par Railway ----
+# Le volume écrase les permissions fixées dans le Dockerfile au build,
+# il faut donc les réappliquer au runtime, une fois le volume attaché.
+echo ">> Fix permissions storage"
+mkdir -p storage/app/public storage/framework/{sessions,views,cache} storage/logs
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 echo ">> config:cache"
 php artisan config:cache
 
@@ -18,9 +26,6 @@ echo ">> view:cache"
 php artisan view:cache
 
 # ---- Démarrage immédiat du serveur ----
-# nginx et php-fpm démarrent AVANT migrate/seed, pour que Railway
-# détecte le port ouvert tout de suite et ne tue pas le conteneur
-# en pensant qu'il n'a jamais démarré.
 echo ">> Démarrage php-fpm"
 php-fpm -D
 
@@ -50,5 +55,4 @@ NGINX_PID=$!
     fi
 ) &
 
-# Le conteneur reste vivant tant que nginx tourne
 wait "$NGINX_PID"
