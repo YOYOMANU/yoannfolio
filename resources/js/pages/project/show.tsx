@@ -3,7 +3,7 @@ import type { SharedPageProps } from '@inertiajs/core';
 import { Link, usePage } from '@inertiajs/react';
 import type { Variants } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, GithubIcon } from 'lucide-react';
 import { WithPublicLayout } from '@/layouts/public-layout';
 import type { Project } from '@/types';
 
@@ -70,7 +70,7 @@ function ProjectShow({ project }: Props) {
     const previousUrl = page.props.previousUrl;
 
     return (
-        <div className='p-15' style={{ overflow: 'hidden' }}>
+        <div className='p-15'>
             {/* En-tête animé dès le chargement */}
             <motion.div
                 className="view-header"
@@ -106,9 +106,10 @@ function ProjectShow({ project }: Props) {
             {/* Bannière d'image avec effet d'ouverture cinématique */}
             <motion.div
                 className={`details-swatch ${project.swatch_class}`}
-                style={{ background: project.image ? `url(${project.image}) center center/cover` : '' }}
+                style={{
+                    background: project.image ? `url(${project.image}) center 20%/cover` : '',
+                }}
                 initial="hidden"
-                itemID={`porject${project.id}`}
                 animate="visible"
                 variants={swatchVariants}
             />
@@ -185,7 +186,7 @@ function ProjectShow({ project }: Props) {
                                     <Link
                                         href={project.live_url}
                                         rel="noopener noreferrer"
-                                        className="btn btn-primary"
+                                        className="btn btn-outline"
                                         style={{ width: '100%', justifyContent: 'center', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                                     >
                                         Visiter le projet live
@@ -202,11 +203,11 @@ function ProjectShow({ project }: Props) {
                                         href={project.repo_url}
                                         target='_blank'
                                         rel="noopener noreferrer"
-                                        className="btn btn-primary"
+                                        className="btn btn-outline"
                                         style={{ width: '100%', justifyContent: 'center', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
                                     >
                                         Visiter le dépôt
-                                        <ExternalLink size={sizeIcon} />
+                                        <GithubIcon size={sizeIcon} />
                                     </Link>
                                 </motion.div>
                             </div>
