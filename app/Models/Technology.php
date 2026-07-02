@@ -33,7 +33,7 @@ class Technology extends Model implements HasMedia
         return $this->belongsToMany(Category::class);
     }
 
-    public function projects()
+    public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);
     }

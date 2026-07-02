@@ -2,8 +2,14 @@
 
 namespace App\Models\Trait;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @mixin Model
+ *
+ * @property string $title
+ */
 trait HasSlug
 {
     protected static function bootHasSlug(): void

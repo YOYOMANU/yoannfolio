@@ -9,6 +9,10 @@ use Illuminate\Validation\Rule;
 
 trait HasSortable
 {
+    /**
+     * @param  Builder<self>  $builder
+     * @return Builder<self>
+     */
     #[Scope]
     protected function orderFromRequest(Builder $builder, Request $request)
     {
