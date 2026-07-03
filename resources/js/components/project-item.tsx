@@ -7,14 +7,22 @@ import { sizeIcon } from "./selected-projects";
 type Props = {
     project: Project;
 }
+
 export default function ProjectItem({ project }: Props) {
     return <div
         key={project.id}
         className={`project-card ${project.is_featured ? 'featured' : ''}`}
     >
-        {/* Échantillon visuel dynamique injecté par vos classes CSS (.swatch-*) */}
-        <div className={`swatch ${project.swatch_class}`}>
-            {project.image && <img src={project.image} alt={project.title} />}
+        {/* CORRECTION : On force une hauteur (ou un ratio aspect-video) et un débordement caché */}
+        <div className={`swatch ${project.swatch_class} w-full h-48 sm:h-56 md:h-64 overflow-hidden relative`}>
+            {project.image && (
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    /* CORRECTION : w-full h-full object-cover empêche la déformation et remplit le conteneur */
+                    className="w-full h-full object-cover object-center block"
+                />
+            )}
         </div>
 
         {/* Contenu textuel de la carte */}
@@ -46,8 +54,8 @@ export default function ProjectItem({ project }: Props) {
                 className="card-link group"
                 style={{ marginTop: 'auto', alignSelf: 'flex-start', color: 'var(--foreground)' }}
             >
-                <span className=' group-hover:text-(--primary)'>Explorer le projet</span>
-                <ArrowRight size={sizeIcon} className=' group-hover:text-(--primary)' />
+                <span className='group-hover:text-(--primary)'>Explorer le projet</span>
+                <ArrowRight size={sizeIcon} className='group-hover:text-(--primary)' />
             </button>
         </div>
     </div>

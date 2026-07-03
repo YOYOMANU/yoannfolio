@@ -164,7 +164,6 @@ export default function NavigationHome() {
                                     href={item.href}
                                     className="block px-4 py-4 text-lg font-medium text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-all duration-200 border border-gray-200/50 dark:border-gray-700/30"
                                     onClick={closeMenu}
-                                    Mention
                                 >
                                     <span className="flex items-center gap-3">
                                         <span className="text-primary">{item.num}</span>

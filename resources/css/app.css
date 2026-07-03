@@ -62,53 +62,67 @@
 }
 
 :root {
-    --background: #faf8f4;
-    --foreground: #0b0d11;
-    --card: #ffffff;
-    --card-foreground: #0b0d11;
-    --popover: #ffffff;
-    --popover-foreground: #0b0d11;
-    --primary: #e8a33d;
-    --primary-foreground: #0b0d11;
-    --secondary: #f1ece3;
-    --secondary-foreground: #0b0d11;
-    --muted: #f1ece3;
-    --muted-foreground: #6f6a60;
-    --accent: #f6e8cf;
-    --accent-foreground: #8a5a18;
-    --accent-dim: rgba(246, 232, 207, 0.4);
-    --destructive: #d6473c;
-    --destructive-foreground: #ffffff;
-    --border: #e6e0d4;
-    --input: #e6e0d4;
-    --ring: #d1922f;
-    --chart-1: #e8a33d;
-    --chart-2: #c97a1f;
-    --chart-3: #3e6fd1;
-    --chart-4: #1e9e73;
-    --chart-5: #8d93a1;
-    --radius: 0.625rem;
-    --sidebar: #ffffff;
-    --sidebar-foreground: #0b0d11;
-    --sidebar-primary: #e8a33d;
-    --sidebar-primary-foreground: #0b0d11;
-    --sidebar-accent: #f6e8cf;
-    --sidebar-accent-foreground: #8a5a18;
-    --sidebar-border: #e6e0d4;
-    --sidebar-ring: #d1922f;
+    /* Un fond légèrement plus dense, chaud et cassé pour faire ressortir le blanc pur des cartes */
+    --background: #f7f4ed;
+    --foreground: #0f1219; /* Un noir bleuté plus profond pour un texte ultra-net */
 
+    /* Les cartes en blanc pur vont maintenant "pop" littéralement par-dessus le fond */
+    --card: #ffffff;
+    --card-foreground: #0f1219;
+    --popover: #ffffff;
+    --popover-foreground: #0f1219;
+
+    /* Le ambre/doré signature reste éclatant, mais légèrement ajusté pour le contraste */
+    --primary: #df9126;
+    --primary-foreground: #ffffff; /* Écrit en blanc sur le orange pour un look moderne et lisible */
+
+    /* Les éléments secondaires reçoivent une vraie nuance distinctive */
+    --secondary: #eee7da;
+    --secondary-foreground: #0f1219;
+
+    /* Ajustement crucial des textes discrets pour le light mode */
+    --muted: #eee7da;
+    --muted-foreground: #5a554a; /* Beaucoup plus sombre pour respecter les normes d'accessibilité */
+
+    /* Les accents et badges deviennent des conteneurs haut de gamme et lisibles */
+    --accent: #f3e6cd;
+    --accent-foreground: #70460c;
+    --accent-dim: rgba(223, 145, 38, 0.08);
+
+    --destructive: #cc3d31;
+    --destructive-foreground: #ffffff;
+
+    /* Les bordures structurent enfin l'espace au lieu de disparaître */
+    --border: #dfd8cb;
+    --input: #dfd8cb;
+    --ring: #df9126;
+
+    --chart-1: #df9126;
+    --chart-2: #b36a13;
+    --chart-3: #2b5cb8;
+    --chart-4: #15805d;
+    --chart-5: #717784;
+
+    --radius: 0.625rem;
+
+    /* Sidebar et layouts */
+    --sidebar: #ffffff;
+    --sidebar-foreground: #0f1219;
+    --sidebar-primary: #df9126;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #f3e6cd;
+    --sidebar-accent-foreground: #70460c;
+    --sidebar-border: #dfd8cb;
+    --sidebar-ring: #df9126;
+
+    /* Gradients rééquilibrés pour le mode clair */
     --gradient-1: linear-gradient(
         135deg,
-        #e8a33d 0%,
-        #f0b15a 50%,
-        #f5c77a 100%
+        #df9126 0%,
+        #e8a33d 50%,
+        #f0b15a 100%
     );
-    --gradient-surface: linear-gradient(
-        135deg,
-        #faf8f4 0%,
-        #f1ece3 50%,
-        #ffffff 100%
-    );
+    --gradient-surface: linear-gradient(135deg, #f7f4ed 0%, #ffffff 100%);
 }
 
 .dark {
@@ -478,9 +492,12 @@
     }
     .layer:hover {
         border-color: var(--primary);
-        background-color: var(--secondary);
+        background-color: var(
+            --card
+        ); /* Garder blanc au survol pour le contraste */
         transform: translateY(-4px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        /* Ombre douce et chaude en light mode, neutre et sombre en dark mode */
+        box-shadow: 0 12px 30px rgba(90, 85, 74, 0.08);
     }
     .layer:hover::before {
         opacity: 1;
@@ -581,7 +598,8 @@
     .project-card:hover {
         transform: translateY(-8px);
         border-color: var(--primary);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        /* Ombre douce multicouche pour un effet d'élévation premium en mode clair */
+        box-shadow: 0 20px 40px rgba(90, 85, 74, 0.12);
     }
     .project-card:hover::before {
         opacity: 1;

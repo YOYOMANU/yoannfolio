@@ -153,11 +153,12 @@ function ProjectShow({ project }: Props) {
                             {project.features.map((feature) => (
                                 <motion.div
                                     key={feature.id}
-                                    className="feature-card p-5 rounded-xl border border-white/5 bg-white/[0.02]"
+                                    /* Remplacement des classes en dur par tes variables sémantiques */
+                                    className="feature-card p-5 rounded-xl border border-border bg-card shadow-sm dark:bg-secondary/50"
                                     variants={scrollItemVariants}
                                     whileHover={{ y: -3, transition: { duration: 0.2 } }}
                                 >
-                                    <h4 className="font-medium text-base mb-1">{feature.title}</h4>
+                                    <h4 className="font-medium text-base mb-1 text-foreground">{feature.title}</h4>
                                     <p className="text-sm" style={{ color: 'var(--muted-foreground)', lineHeight: 1.5 }}>
                                         {feature.description}
                                     </p>
@@ -175,33 +176,34 @@ function ProjectShow({ project }: Props) {
                     viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                 >
-                    <div className="details-meta-box p-6 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md">
+                    {/* Correction : bg-card pour le blanc pur en light mode, dark:bg-secondary/40 pour le mode sombre, border sémantique et micro-ombre */}
+                    <div className="details-meta-box p-6 rounded-2xl border border-border bg-card dark:bg-secondary/40 shadow-sm backdrop-blur-md">
                         <h3
-                            className="font-display font-semibold"
+                            className="font-display font-semibold text-foreground"
                             style={{ marginTop: 0, marginBottom: '1.25rem', fontSize: '1.25rem' }}
                         >
                             Spécifications
                         </h3>
 
-                        {/* Flex-row sur les items pour garder les labels et valeurs propres sur mobile */}
-                        <div className="meta-item flex justify-between items-center py-3 border-b border-white/5 gap-4">
+                        {/* Correction : Remplacement de border-white/5 par border-border */}
+                        <div className="meta-item flex justify-between items-center py-3 border-b border-border gap-4">
                             <span className="meta-label text-sm text-muted-foreground">Rôle</span>
-                            <span className="meta-value text-sm font-medium text-right">{project.role}</span>
+                            <span className="meta-value text-sm font-medium text-right text-foreground">{project.role}</span>
                         </div>
 
-                        <div className="meta-item flex justify-between items-center py-3 border-b border-white/5 gap-4">
+                        <div className="meta-item flex justify-between items-center py-3 border-b border-border gap-4">
                             <span className="meta-label text-sm text-muted-foreground">Contexte</span>
-                            <span className="meta-value text-sm font-medium text-right">{project.context}</span>
+                            <span className="meta-value text-sm font-medium text-right text-foreground">{project.context}</span>
                         </div>
 
-                        <div className="meta-item flex justify-between items-start py-3 border-b border-white/5 gap-4">
+                        <div className="meta-item flex justify-between items-start py-3 border-b border-border gap-4">
                             <span className="meta-label text-sm text-muted-foreground pt-0.5">Technologies</span>
-                            <span className="meta-value text-sm font-medium text-right max-w-[65%]">
+                            <span className="meta-value text-sm font-medium text-right text-foreground max-w-[65%]">
                                 {project.technologies.map((tech) => tech.name).join(', ')}
                             </span>
                         </div>
 
-                        {/* Liens Externes adaptés au tactile mobile (w-full) */}
+                        {/* Liens Externes */}
                         <div className="flex flex-col gap-3 mt-6">
                             {project.live_url && (
                                 <motion.div whileHover={{ scale: 1.01, y: -1 }} whileTap={{ scale: 0.99 }}>
