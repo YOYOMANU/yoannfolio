@@ -35,8 +35,8 @@ RUN composer dump-autoload --optimize --no-dev
 
 # .env minimal pour que `artisan` puisse booter pendant le build
 # (le plugin Wayfinder appelle `php artisan wayfinder:generate` via Vite)
-RUN printf "APP_NAME=%s\nAPP_ENV=local\n...\nVITE_APP_NAME=%s\n" "$VITE_APP_NAME" "$VITE_APP_NAME" > .env \
-    && php artisan key:generate --forc
+RUN printf 'APP_NAME="%s"\nAPP_ENV=local\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://localhost\nDB_CONNECTION=sqlite\nSESSION_DRIVER=array\nCACHE_STORE=array\nQUEUE_CONNECTION=sync\nLOG_CHANNEL=stack\nMAIL_MAILER=log\nVITE_APP_NAME="%s"\n' "$VITE_APP_NAME" "$VITE_APP_NAME" > .env \
+    && php artisan key:generate --force
 
 RUN npm run build
 
