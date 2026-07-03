@@ -25,7 +25,7 @@ class ProjectController extends Controller
         $query = Project::query()->orderFromRequest($request);
         $search = $request->get('q');
         if ($search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('title', 'like', '%'.$search.'%');
         }
 
         return Inertia::render('project/index', [

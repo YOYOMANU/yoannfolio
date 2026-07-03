@@ -1,6 +1,5 @@
 import type { SharedPageProps } from '@inertiajs/core';
 import { usePage } from "@inertiajs/react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import type { ReactNode } from "react";
 import type { FC } from "react";

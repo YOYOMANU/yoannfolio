@@ -1,5 +1,6 @@
-import { MouseEvent, Ref, RefObject, useRef } from 'react';
 import { useMotionValue, useTransform, useSpring, motion } from 'framer-motion';
+import type { MouseEvent } from 'react';
+import { useRef } from 'react';
 
 export default function ProfilePhoto({ PhotoProfil }: { PhotoProfil: string }) {
     const ref = useRef<HTMLDivElement>(null);

@@ -5,8 +5,8 @@ import { ArrowRight, GraduationCap, Layers, Users } from 'lucide-react';
 import PhotoProfil from '@/assets/profileH.jpeg';
 import contact from '@/routes/contact';
 import projets from '@/routes/projets';
-import { sizeIcon } from './selected-projects';
 import ProfilePhoto from './profile-photo';
+import { sizeIcon } from './selected-projects';
 
 const containerVariants = {
     hidden: { opacity: 0 },

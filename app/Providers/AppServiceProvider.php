@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Flysystem\CloudinaryAdapter;
+use App\Flysystem\CloudinaryFilesystemAdapter;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Cloudinary\Cloudinary;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
         Gate::define('access-admin', function (User $user) {
             return $user->role === 'admin';
         });
@@ -48,11 +49,7 @@ class AppServiceProvider extends ServiceProvider
             $adapter = new CloudinaryAdapter($cloudinary);
             $filesystem = new Filesystem($adapter);
 
-            return new FilesystemAdapter(
-                $filesystem,
-                $adapter,
-                $config,
-            );
+            return new CloudinaryFilesystemAdapter($filesystem, $adapter, $config);
         });
     }
 
@@ -76,6 +73,7 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null,
         );
+
         JsonResource::withoutWrapping();
     }
 }

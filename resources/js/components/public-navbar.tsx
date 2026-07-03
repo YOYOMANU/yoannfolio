@@ -1,11 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/use-auth';
-import { dashboard } from '@/routes';
-import contact from '@/routes/contact';
 import { Menu, X, Sun, Moon, Laptop } from 'lucide-react';
-
-// Importations des composants shadcn
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -13,11 +8,16 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from '@/hooks/use-auth';
+import { dashboard } from '@/routes';
+import contact from '@/routes/contact';
+
+// Importations des composants shadcn
 
 export default function NavigationHome() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user, is_admin } = useAuth();
-    const [theme, setThemeState] = useState<"light" | "dark" | "system">("system");
+    const [theme, setThemeState] = useState<"light" | "dark" | "system">("dark");
 
     const closeMenu = () => setIsMenuOpen(false);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -29,6 +29,7 @@ export default function NavigationHome() {
         } else {
             document.body.style.overflow = 'unset';
         }
+
         return () => {
             document.body.style.overflow = 'unset';
         };
