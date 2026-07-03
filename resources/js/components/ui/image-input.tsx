@@ -26,16 +26,19 @@ export function ImageInput({
     const processFiles = (files: File[]) => {
         if (files.length === 0) return;
 
-        if (preview?.startsWith('blob:')) {
-            URL.revokeObjectURL(preview);
-        }
+        setPreview((prev) => {
+            if (prev?.startsWith('blob:')) {
+                URL.revokeObjectURL(prev);
+            }
+            return props.multiple
+                ? URL.createObjectURL(files[files.length - 1])
+                : URL.createObjectURL(files[0]);
+        });
 
-        if (props.multiple && files.length > 0) {
-            setPreview(URL.createObjectURL(files[files.length - 1]));
+        if (props.multiple) {
             setCount(files.length);
             onFilesChange?.(files);
         } else {
-            setPreview(URL.createObjectURL(files[0]));
             setCount(0);
             onFilesChange?.([files[0]]);
         }
@@ -61,14 +64,22 @@ export function ImageInput({
         const files = Array.from(e.dataTransfer.files ?? []);
         if (files.length === 0 || !inputRef.current) return;
 
+        // Met à jour l'input natif pour que le FormData au submit récupère bien le fichier
         const dataTransfer = new DataTransfer();
         files.forEach((file) => dataTransfer.items.add(file));
         inputRef.current.files = dataTransfer.files;
 
-        // dispatchEvent déclenche déjà handleChange → processFiles() + props.onChange
-        // Ne PAS rappeler processFiles ici, sinon double mise à jour du state = race de rendu
-        const changeEvent = new Event('change', { bubbles: true });
-        inputRef.current.dispatchEvent(changeEvent);
+        // Traite directement les fichiers, sans passer par dispatchEvent/synthetic system
+        processFiles(files);
+
+        // Notifie le parent manuellement (même contrat que handleChange, sans simuler d'event DOM)
+        if (props.onChange) {
+            props.onChange({
+                ...e,
+                target: inputRef.current,
+                currentTarget: inputRef.current,
+            } as unknown as React.ChangeEvent<HTMLInputElement>);
+        }
     };
 
     const remaining = maxImages != null && existingCount != null

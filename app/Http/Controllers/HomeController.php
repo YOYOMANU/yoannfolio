@@ -16,7 +16,7 @@ class HomeController extends Controller
             'categories' => CategoryResource::collection(
                 Category::with('technologies.media')->get()
             ),
-            'Projects' => ProjectResource::collection(Project::all()),
+            'Projects' => ProjectResource::collection(Project::all()->where('status', '=', 'published')),
         ]);
     }
 }
