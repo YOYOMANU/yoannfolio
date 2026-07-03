@@ -1,4 +1,4 @@
-import { ChangeEventHandler, ComponentProps, DragEventHandler, useState } from 'react';
+import { ChangeEventHandler, ComponentProps, DragEventHandler, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { UploadIcon } from 'lucide-react';
 
@@ -18,35 +18,61 @@ export function ImageInput({
     maxImages,
     ...props
 }: Props) {
+    const inputRef = useRef<HTMLInputElement>(null);
     const [hover, setHover] = useState(false);
     const [preview, setPreview] = useState(defaultValue?.toString() ?? null);
     const [count, setCount] = useState(0);
 
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-        setHover(false);
-        const files = Array.from(event.target.files ?? []);
+    const processFiles = (files: File[]) => {
+        if (files.length === 0) return;
+
+        if (preview?.startsWith('blob:')) {
+            URL.revokeObjectURL(preview);
+        }
 
         if (props.multiple && files.length > 0) {
             setPreview(URL.createObjectURL(files[files.length - 1]));
             setCount(files.length);
             onFilesChange?.(files);
-        } else if (files[0]) {
+        } else {
             setPreview(URL.createObjectURL(files[0]));
             setCount(0);
             onFilesChange?.([files[0]]);
         }
+    };
 
-        // Délègue aussi le onChange parent (pour handleImagesChange dans la page)
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+        setHover(false);
+        const files = Array.from(event.target.files ?? []);
+        processFiles(files);
         props.onChange?.(event);
     };
 
-    // ← fix drag & drop : géré sur le div, pas sur l'Input
     const handleDragOver: DragEventHandler<HTMLDivElement> = (e) => {
         e.preventDefault();
         setHover(true);
     };
     const handleDragLeave: DragEventHandler<HTMLDivElement> = () => setHover(false);
-    const handleDrop: DragEventHandler<HTMLDivElement> = () => setHover(false);
+
+    const handleDrop: DragEventHandler<HTMLDivElement> = (e) => {
+        e.preventDefault();
+        setHover(false);
+
+        const files = Array.from(e.dataTransfer.files ?? []);
+        if (files.length === 0 || !inputRef.current) return;
+
+        // Injecte les fichiers dans l'input natif pour que le FormData au submit les récupère
+        const dataTransfer = new DataTransfer();
+        files.forEach((file) => dataTransfer.items.add(file));
+        inputRef.current.files = dataTransfer.files;
+
+        // Déclenche un vrai évènement 'change' pour que React (et le onChange du parent) le captent
+        const changeEvent = new Event('change', { bubbles: true });
+        inputRef.current.dispatchEvent(changeEvent);
+
+        // Traite aussi localement (preview interne)
+        processFiles(files);
+    };
 
     const remaining = maxImages != null && existingCount != null
         ? maxImages - existingCount
@@ -65,13 +91,13 @@ export function ImageInput({
             onMouseLeave={() => setHover(false)}
             onDragOver={!props.disabled ? handleDragOver : undefined}
             onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
+            onDrop={!props.disabled ? handleDrop : undefined}
         >
             <input
+                ref={inputRef}
                 type="file"
                 {...props}
                 onChange={handleChange}
-                // plus de onDragOver/onDragLeave ici
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 disabled:cursor-not-allowed"
             />
             <UploadIcon size={16} />
@@ -87,14 +113,12 @@ export function ImageInput({
                 />
             )}
 
-            {/* Badge fichiers sélectionnés */}
             {count > 1 && (
                 <span className="absolute top-1 right-1 z-20 rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-black shadow">
                     {count} photos
                 </span>
             )}
 
-            {/* Badge slots restants */}
             {remaining !== null && remaining > 0 && (
                 <span className="absolute bottom-1 left-1 z-20 rounded-full bg-black/50 px-2 py-0.5 text-xs text-white">
                     +{remaining} max
