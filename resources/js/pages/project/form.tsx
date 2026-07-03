@@ -38,7 +38,6 @@ type Props = {
 const statusOptions: SelectOption[] = [
     { value: 'draft', label: 'Brouillon' },
     { value: 'published', label: 'Publié' },
-    { value: 'archived', label: 'Archivé' },
 ];
 
 function ProjectEditPage({ Project, technologies }: Props) {
