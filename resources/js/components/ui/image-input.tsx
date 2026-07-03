@@ -61,17 +61,14 @@ export function ImageInput({
         const files = Array.from(e.dataTransfer.files ?? []);
         if (files.length === 0 || !inputRef.current) return;
 
-        // Injecte les fichiers dans l'input natif pour que le FormData au submit les récupère
         const dataTransfer = new DataTransfer();
         files.forEach((file) => dataTransfer.items.add(file));
         inputRef.current.files = dataTransfer.files;
 
-        // Déclenche un vrai évènement 'change' pour que React (et le onChange du parent) le captent
+        // dispatchEvent déclenche déjà handleChange → processFiles() + props.onChange
+        // Ne PAS rappeler processFiles ici, sinon double mise à jour du state = race de rendu
         const changeEvent = new Event('change', { bubbles: true });
         inputRef.current.dispatchEvent(changeEvent);
-
-        // Traite aussi localement (preview interne)
-        processFiles(files);
     };
 
     const remaining = maxImages != null && existingCount != null

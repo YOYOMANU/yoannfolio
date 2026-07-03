@@ -81,7 +81,7 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                             >
                                 <Link href={project.create()}>
                                     <PlusIcon />
-                                    Ajouter une technologie
+                                    Ajouter un projet
                                 </Link>
                             </Button>
                         </TableCell>
@@ -94,7 +94,7 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                                     <img
                                         src={item.image}
                                         alt=""
-                                        className="rouded-lg aspect-square w-20 object-cover"
+                                        className="rounded-lg aspect-square w-20 object-cover"
                                     />
                                 ) : (
                                     <div className="aspect-square size-20 bg-background"></div>
