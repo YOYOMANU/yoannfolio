@@ -46,17 +46,9 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
 
     return (
         <div className="space-y-4">
-            <TopAction>
-                <Form
-                    {...project.index.form}
-                    className="flex items-center gap-2"
-                >
-                    <Input
-                        placeholder="Rechercher..."
-                        name="q"
-                        defaultValue={q ?? ''}
-                        autoFocus
-                    />
+            <TopAction collapsibleSearch>
+                <Form {...project.index.form} className="flex items-center gap-2">
+                    <Input placeholder="Rechercher..." name="q" defaultValue={q ?? ''} autoFocus />
                     <Button>Rechercher</Button>
                 </Form>
             </TopAction>

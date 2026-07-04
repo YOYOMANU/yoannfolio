@@ -56,7 +56,7 @@ function CategoryEditPage({ Category }: Props) {
                     </FormField>
 
                     <TopAction>
-                        <Button disabled={processing}>
+                        <Button className='mt-2' disabled={processing}>
                             <SaveIcon className="mr-2 h-4 w-4" />
                             {processing ? 'Enregistrement…' : 'Enregistrer'}
                         </Button>

@@ -1,16 +1,21 @@
 import { SearchIcon, XIcon } from 'lucide-react';
-import { useEffect, useRef, useState  } from 'react';
-import type {PropsWithChildren} from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Button } from '@/components/ui/button';
 
-export function TopAction({ children }: PropsWithChildren) {
+type Props = PropsWithChildren<{
+    /** Replie le contenu derrière une icône loupe sur mobile (listing avec recherche). */
+    collapsibleSearch?: boolean;
+}>;
+
+export function TopAction({ children, collapsibleSearch = false }: Props) {
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!open) {
-return;
-}
+            return;
+        }
 
         const handleClickOutside = (e: MouseEvent) => {
             if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -23,8 +28,18 @@ return;
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [open]);
 
+    // Mode par défaut : toujours visible (ex. bouton "Enregistrer" sur un formulaire).
+    if (!collapsibleSearch) {
+        return (
+            <div className="relative mb-4 flex flex-wrap items-center justify-end gap-2 lg:absolute lg:top-1.5 lg:right-6 lg:mb-0">
+                {children}
+            </div>
+        );
+    }
+
+    // Mode recherche : icône loupe repliable sur mobile, toujours visible sur desktop.
     return (
-        <div ref={ref} className="absolute top-1.5 right-4 lg:right-6">
+        <div ref={ref} className="absolute top-4 right-4 lg:right-6">
             {/* Mobile : icône seule, sur la même ligne que le breadcrumb */}
             <div className="lg:hidden">
                 <Button
