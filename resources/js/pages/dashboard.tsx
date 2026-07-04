@@ -1,9 +1,9 @@
 import { Head } from '@inertiajs/react';
 import SkillsRadarChart, { mockSkills } from '@/components/Skillsradarchart';
-import TechStackChart, { mockTechStack } from '@/components/TechStackChart';
 import TrafficSourceChart, { mockTrafficSources } from '@/components/Trafficsourcechart';
 import VisitsAreaChart, { mockVisits } from '@/components/Visitsareachart';
 import { dashboard } from '@/routes';
+import TechStackChart, { mockTechStack } from '@/components/TechStackChart';
 
 
 export default function Dashboard() {
