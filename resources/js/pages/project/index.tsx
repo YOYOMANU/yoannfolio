@@ -1,5 +1,5 @@
 import { Form, Link, router } from '@inertiajs/react';
-import { EditIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { EditIcon, ImageIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import { SortableTableHead } from '@/components/sortable-table-head';
 import { TopAction } from '@/components/top-action';
@@ -60,97 +60,181 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                     <Button>Rechercher</Button>
                 </Form>
             </TopAction>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <SortableTableHead field="id">ID</SortableTableHead>
-                        <TableHead></TableHead>
-                        <SortableTableHead field="title">Nom</SortableTableHead>
-                        <SortableTableHead field="status">Status</SortableTableHead>
-                        <TableHead className="text-end">Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
 
-                <TableBody>
-                    <TableRow>
-                        <TableCell colSpan={5}>
+            <Button
+                asChild
+                variant="outline"
+                className="w-full md:hidden"
+            >
+                <Link href={project.create()}>
+                    <PlusIcon />
+                    Ajouter un projet
+                </Link>
+            </Button>
+
+            {/* ---------- Vue mobile : cards ---------- */}
+            <div className="space-y-3 md:hidden">
+                {collection.data.map((item) => (
+                    <div
+                        key={item.id}
+                        className="flex items-center gap-3 rounded-lg border border-border bg-card p-3"
+                    >
+                        {item.image ? (
+                            <img
+                                src={item.image}
+                                alt=""
+                                className="size-16 shrink-0 rounded-md object-cover"
+                            />
+                        ) : (
+                            <div className="flex size-16 shrink-0 items-center justify-center rounded-md bg-background text-muted-foreground">
+                                <ImageIcon size={20} />
+                            </div>
+                        )}
+
+                        <div className="min-w-0 flex-1">
+                            <Link
+                                href={project.edit({
+                                    project: parseInt(item.id),
+                                })}
+                                className="block truncate font-medium hover:underline"
+                            >
+                                {item.title}
+                            </Link>
+                            <span className="text-sm text-muted-foreground">
+                                #{item.id} · {item.status}
+                            </span>
+                        </div>
+
+                        <div className="flex shrink-0 gap-2">
                             <Button
                                 asChild
+                                size="icon"
                                 variant="outline"
-                                className="w-full"
                             >
-                                <Link href={project.create()}>
-                                    <PlusIcon />
-                                    Ajouter un projet
+                                <Link
+                                    href={project.edit({
+                                        project: parseInt(item.id),
+                                    })}
+                                >
+                                    <EditIcon size={16} />
                                 </Link>
                             </Button>
-                        </TableCell>
-                    </TableRow>
-                    {collection.data.map((item) => (
-                        <TableRow key={item.id}>
-                            <TableCell>{item.id}</TableCell>
-                            <TableCell>
-                                {item.image ? (
-                                    <img
-                                        src={item.image}
-                                        alt=""
-                                        className="rounded-lg aspect-square w-20 object-cover"
-                                    />
-                                ) : (
-                                    <div className="aspect-square size-20 bg-background"></div>
-                                )}
-                            </TableCell>
-                            <TableCell>
-                                <Link
-                                    href={project.edit({
-                                        project: parseInt(item.id),
-                                    })}
-                                    className="hover:underline"
+                            <Button
+                                size="icon"
+                                variant="destructive-outline"
+                                onClick={() =>
+                                    setProjectToDelete(parseInt(item.id))
+                                }
+                            >
+                                <TrashIcon size={16} />
+                            </Button>
+                        </div>
+                    </div>
+                ))}
+
+                {collection.data.length === 0 && (
+                    <p className="py-8 text-center text-sm text-muted-foreground">
+                        Aucun projet trouvé.
+                    </p>
+                )}
+            </div>
+
+            {/* ---------- Vue desktop : table ---------- */}
+            <div className="hidden md:block">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <SortableTableHead field="id">ID</SortableTableHead>
+                            <TableHead></TableHead>
+                            <SortableTableHead field="title">Nom</SortableTableHead>
+                            <SortableTableHead field="status">Status</SortableTableHead>
+                            <TableHead className="text-end">Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+
+                    <TableBody>
+                        <TableRow>
+                            <TableCell colSpan={5}>
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    className="w-full"
                                 >
-                                    {item.title}
-                                </Link>
-                            </TableCell>
-                            <TableCell>
-                                <Link
-                                    href={project.edit({
-                                        project: parseInt(item.id),
-                                    })}
-                                    className="hover:underline"
-                                >
-                                    {item.status}
-                                </Link>
-                            </TableCell>
-                            <TableCell>
-                                <div className="item-center flex justify-end gap-2">
-                                    <Button
-                                        asChild
-                                        size="icon"
-                                        variant="outline"
-                                    >
-                                        <Link
-                                            href={project.edit({
-                                                project: parseInt(item.id),
-                                            })}
-                                        >
-                                            <EditIcon size={16} />
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        size="icon"
-                                        variant="destructive-outline"
-                                        onClick={() =>
-                                            setProjectToDelete(parseInt(item.id))
-                                        }
-                                    >
-                                        <TrashIcon size={16} />
-                                    </Button>
-                                </div>
+                                    <Link href={project.create()}>
+                                        <PlusIcon />
+                                        Ajouter un projet
+                                    </Link>
+                                </Button>
                             </TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                        {collection.data.map((item) => (
+                            <TableRow key={item.id}>
+                                <TableCell>{item.id}</TableCell>
+                                <TableCell>
+                                    {item.image ? (
+                                        <img
+                                            src={item.image}
+                                            alt=""
+                                            className="rounded-lg aspect-square w-20 object-cover"
+                                        />
+                                    ) : (
+                                        <div className="aspect-square size-20 bg-background"></div>
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    <Link
+                                        href={project.edit({
+                                            project: parseInt(item.id),
+                                        })}
+                                        className="hover:underline"
+                                    >
+                                        {item.title}
+                                    </Link>
+                                </TableCell>
+                                <TableCell>
+                                    <Link
+                                        href={project.edit({
+                                            project: parseInt(item.id),
+                                        })}
+                                        className="hover:underline"
+                                    >
+                                        {item.status}
+                                    </Link>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="item-center flex justify-end gap-2">
+                                        <Button
+                                            asChild
+                                            size="icon"
+                                            variant="outline"
+                                        >
+                                            <Link
+                                                href={project.edit({
+                                                    project: parseInt(item.id),
+                                                })}
+                                            >
+                                                <EditIcon size={16} />
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            size="icon"
+                                            variant="destructive-outline"
+                                            onClick={() =>
+                                                setProjectToDelete(parseInt(item.id))
+                                            }
+                                        >
+                                            <TrashIcon size={16} />
+                                        </Button>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+
             <CollectionPagination collection={collection} />
+
             <AlertDialog
                 open={projectToDelete !== null}
                 onOpenChange={(open) => !open && setProjectToDelete(null)}

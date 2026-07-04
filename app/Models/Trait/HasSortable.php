@@ -17,7 +17,7 @@ trait HasSortable
     protected function orderFromRequest(Builder $builder, Request $request)
     {
         // Aucun champ sortable
-        if (empty($this->sortable ?? [])) {
+        if (empty($this->sortable)) {
             return $builder;
         }
 

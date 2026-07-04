@@ -3,9 +3,6 @@ includes:
     - vendor/nesbot/carbon/extension.neon
 
 parameters:
-    ignoreErrors:
-        - identifier: return.type
-        path: app/Models/*.php
     paths:
         - app/
         - bootstrap/app.php
