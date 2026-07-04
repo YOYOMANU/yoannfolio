@@ -224,7 +224,7 @@ export default WithAppLayout(Breadcrumbs, ({ collection, q }: Props) => {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Voulez vous supprimer ce projet ?
+                            Voulez vous supprimer cette technologie ?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             Cette action est irréversible.
