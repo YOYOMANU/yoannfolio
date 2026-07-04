@@ -30,17 +30,31 @@ class Technology extends Model implements HasMedia
         'id',
     ];
 
+<<<<<<< HEAD
     /**
      * @return BelongsToMany<Category, Technology>
      */
+||||||| parent of c9888eb (CI/CD)
+=======
+    /**
+     * @return BelongsToMany<Category, static>
+     */
+>>>>>>> c9888eb (CI/CD)
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
+<<<<<<< HEAD
     /**
      * @return BelongsToMany<Project, Technology>
      */
+||||||| parent of c9888eb (CI/CD)
+=======
+    /**
+     * @return BelongsToMany<Project, static>
+     */
+>>>>>>> c9888eb (CI/CD)
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);

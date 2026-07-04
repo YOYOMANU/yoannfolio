@@ -50,7 +50,7 @@ class Project extends Model implements HasMedia
     ];
 
     /**
-     * @return BelongsToMany<Technology, Project>
+     * @return BelongsToMany<Technology, static>
      */
     public function technologies(): BelongsToMany
     {
@@ -58,7 +58,7 @@ class Project extends Model implements HasMedia
     }
 
     /**
-     * @return HasMany<ProjectFeature, Project>
+     * @return HasMany<ProjectFeature, static>
      */
     public function features(): HasMany
     {

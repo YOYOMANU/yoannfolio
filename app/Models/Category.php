@@ -22,7 +22,7 @@ class Category extends Model
     protected $sortable = ['id', 'name'];
 
     /**
-     * @return BelongsToMany<Technology, Category>
+     * @return BelongsToMany<Technology, static>
      */
     public function technologies(): BelongsToMany
     {

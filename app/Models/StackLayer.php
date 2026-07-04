@@ -18,10 +18,19 @@ class StackLayer extends Model
         'description',
     ];
 
+<<<<<<< HEAD
     /**
      * @return BelongsToMany<Technology, StackLayer>
      */
     public function technologies(): BelongsToMany
+||||||| parent of c9888eb (CI/CD)
+    public function technologies()
+=======
+    /**
+     * @return BelongsToMany<Technology, static>
+     */
+    public function technologies(): BelongsToMany
+>>>>>>> c9888eb (CI/CD)
     {
         return $this->belongsToMany(Technology::class);
     }

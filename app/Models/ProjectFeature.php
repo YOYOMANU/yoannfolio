@@ -26,7 +26,7 @@ class ProjectFeature extends Model
     ];
 
     /**
-     * @return BelongsTo<Project, ProjectFeature>
+     * @return BelongsTo<Project, static>
      */
     public function project(): BelongsTo
     {
