@@ -26,7 +26,6 @@ import {
 } from '@/components/ui/table';
 import { WithAppLayout } from '@/layouts/app-layout';
 import category from '@/routes/category';
-import technology from '@/routes/technology';
 import type { BreadcrumbItem, Category, PaginatedCollection } from '@/types';
 
 const Breadcrumbs: BreadcrumbItem[] = [
