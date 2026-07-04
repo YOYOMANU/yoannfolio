@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FormProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\ProjectFeature;
 use App\Models\Technology;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProjectController extends Controller
 {
@@ -20,7 +23,7 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $query = Project::query()->orderFromRequest($request);
         $search = $request->get('q');
@@ -37,7 +40,7 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         $project = new Project;
 
@@ -50,35 +53,31 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FormProjectRequest $request)
+    public function store(FormProjectRequest $request): RedirectResponse
     {
-        //
         $project = Project::create($request->validated());
         $project->technologies()->sync($request->input('technology_ids', []));
         $this->syncFeatures($project, $request->input('features', []));
         $this->handleImages($project, $request);
 
         return to_route('project.index')->with('success', 'Le projet à été créé avec succès');
-
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(Project $project): Response
     {
-
         return Inertia::render('project/form', [
             'Project' => new ProjectResource($project->load(['technologies', 'features', 'media'])),
             'technologies' => Technology::orderBy('name', 'asc')->get(['id', 'name']),
-
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(FormProjectRequest $request, Project $project)
+    public function update(FormProjectRequest $request, Project $project): RedirectResponse
     {
         $project->update($request->validated());
         $project->technologies()->sync($request->input('technology_ids', []));
@@ -86,7 +85,6 @@ class ProjectController extends Controller
         $this->handleImages($project, $request);
 
         return to_route('project.index')->with('success', 'Le projet à été modifié avec succès');
-
     }
 
     private function handleImages(Project $project, FormProjectRequest $request): void
@@ -97,11 +95,15 @@ class ProjectController extends Controller
         }
     }
 
+    /**
+     * @param array<int, array{id?: int, title: string, description: string}> $features
+     */
     private function syncFeatures(Project $project, array $features): void
     {
         $keptIds = [];
 
         foreach ($features as $index => $feature) {
+            /** @var ProjectFeature $projectFeature */
             $projectFeature = $project->features()->updateOrCreate(
                 ['id' => $feature['id'] ?? null],
                 [
@@ -121,7 +123,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project): RedirectResponse
     {
         $project->delete();
 

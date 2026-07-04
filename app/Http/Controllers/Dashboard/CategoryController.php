@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FormCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
@@ -19,7 +21,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $query = Category::query()->orderFromRequest($request);
         $search = $request->get('q');
@@ -33,7 +35,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         $category = new Category;
 
@@ -45,20 +47,18 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FormCategoryRequest $request)
+    public function store(FormCategoryRequest $request): RedirectResponse
     {
         $category = Category::create($request->validated());
 
         return to_route('category.index')->with('success', 'La categorie à été créée avec succès');
-
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Category $category): Response
     {
-
         return Inertia::render('category/form', [
             'Category' => new CategoryResource($category),
         ]);
@@ -67,18 +67,17 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(FormCategoryRequest $request, Category $category)
+    public function update(FormCategoryRequest $request, Category $category): RedirectResponse
     {
         $category->update($request->validated());
 
         return to_route('category.index')->with('success', 'La categorie à été modifiée avec succès');
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
 

@@ -5,20 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactMessageRequest;
 use App\Mail\ContactFormSubmitted;
 use App\Models\ContactMessage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ContactMessageController extends Controller
 {
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('contact/index');
     }
 
-    public function store(ContactMessageRequest $request)
+    public function store(ContactMessageRequest $request): RedirectResponse
     {
         $data = $request->validated();
 

@@ -18,8 +18,9 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        /** @var string $title */
-        $title = (string) fake()->unique()->words(2, true);
+        /** @var array<int, string> $words */
+        $words = fake()->unique()->words(2);
+        $title = implode(' ', $words);
 
         return [
             'slug' => Str::slug($title),

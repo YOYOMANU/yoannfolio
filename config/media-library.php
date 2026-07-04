@@ -25,7 +25,6 @@ use Spatie\MediaLibrary\Support\FileNamer\DefaultFileNamer;
 use Spatie\MediaLibrary\Support\FileRemover\DefaultFileRemover;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 use Spatie\MediaLibrary\Support\UrlGenerator\DefaultUrlGenerator;
-use Spatie\MediaLibraryPro\Models\TemporaryUpload;
 
 return [
 
@@ -33,8 +32,7 @@ return [
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
      */
-    'disk_name' => env('MEDIA_DISK', 'cloudinary'),
-    'conversions_disk' => env('MEDIA_DISK', 'cloudinary'),
+    'disk_name' => env('MEDIA_DISK', 'public'),
 
     /*
      * The disk on which to store conversions (thumbnails, etc.) and responsive images
@@ -120,7 +118,7 @@ return [
      *
      * This model is only used in Media Library Pro (https://medialibrary.pro)
      */
-    'temporary_upload_model' => TemporaryUpload::class,
+    'temporary_upload_model' => null,
 
     /*
      * When enabled, Media Library Pro will only process temporary uploads that were uploaded

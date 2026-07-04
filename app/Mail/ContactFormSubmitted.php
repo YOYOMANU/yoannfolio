@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\Models\ContactMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -28,7 +29,7 @@ class ContactFormSubmitted extends Mailable
     {
         return new Envelope(
             subject: 'Nouveau message de contact : '.($this->contactMessage->subject ?: 'Sans sujet'),
-            replyTo: [$this->contactMessage->email], // pratique pour répondre direct au visiteur
+            replyTo: [$this->contactMessage->email],
         );
     }
 
@@ -40,7 +41,6 @@ class ContactFormSubmitted extends Mailable
         return new Content(
             view: 'mail.contact.submitted',
         );
-
     }
 
     /**

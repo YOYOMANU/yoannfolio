@@ -7,6 +7,7 @@ use League\Flysystem\Config;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\UrlGeneration\PublicUrlGenerator;
+use League\Flysystem\UnableToReadFile;
 
 class CloudinaryAdapter implements FilesystemAdapter, PublicUrlGenerator
 {
@@ -40,7 +41,12 @@ class CloudinaryAdapter implements FilesystemAdapter, PublicUrlGenerator
     public function writeStream(string $path, $contents, Config $config): void
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'cld') . '.jpg';
-        $out     = fopen($tmpFile, 'wb');
+       $out = fopen($tmpFile, 'wb');
+
+        if ($out === false) {
+            throw new \RuntimeException("Impossible d'ouvrir le fichier temporaire : {$tmpFile}");
+        }
+
         stream_copy_to_stream($contents, $out);
         fclose($out);
         $this->upload($tmpFile, $path);
@@ -61,12 +67,24 @@ class CloudinaryAdapter implements FilesystemAdapter, PublicUrlGenerator
 
     public function read(string $path): string
     {
-        return file_get_contents($this->publicUrl($path, new Config()));
+        $contents = file_get_contents($this->publicUrl($path, new Config()));
+
+        if ($contents === false) {
+            throw UnableToReadFile::fromLocation($path, 'Cloudinary : lecture du fichier distant impossible');
+        }
+
+        return $contents;
     }
 
     public function readStream(string $path)
     {
-        return fopen($this->publicUrl($path, new Config()), 'rb');
+        $stream = fopen($this->publicUrl($path, new Config()), 'rb');
+
+        if ($stream === false) {
+            throw UnableToReadFile::fromLocation($path, 'Cloudinary : ouverture du flux distant impossible');
+        }
+
+        return $stream;
     }
 
     public function delete(string $path): void

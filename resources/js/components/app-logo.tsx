@@ -1,4 +1,3 @@
-import AppLogoIcon from '@/components/app-logo-icon';
 import { ShieldCheckIcon } from 'lucide-react';
 
 export default function AppLogo() {

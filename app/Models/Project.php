@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Models\Trait\HasSlug;
 use App\Models\Trait\HasSortable;
+use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Override;
 use Spatie\Image\Enums\Fit;
@@ -40,17 +42,24 @@ class Project extends Model implements HasMedia
         'is_featured' => 'boolean',
     ];
 
+    /** @var array<int, string> */
     protected $sortable = [
         'name',
         'id',
         'status',
     ];
 
-    public function technologies()
+    /**
+     * @return BelongsToMany<Technology, Project>
+     */
+    public function technologies(): BelongsToMany
     {
         return $this->belongsToMany(Technology::class);
     }
 
+    /**
+     * @return HasMany<ProjectFeature, Project>
+     */
     public function features(): HasMany
     {
         return $this->hasMany(ProjectFeature::class);
