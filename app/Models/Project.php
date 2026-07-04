@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Trait\HasSlug;
 use App\Models\Trait\HasSortable;
-use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -49,17 +48,11 @@ class Project extends Model implements HasMedia
         'status',
     ];
 
-    /**
-     * @return BelongsToMany<Technology, static>
-     */
     public function technologies(): BelongsToMany
     {
         return $this->belongsToMany(Technology::class);
     }
 
-    /**
-     * @return HasMany<ProjectFeature, static>
-     */
     public function features(): HasMany
     {
         return $this->hasMany(ProjectFeature::class);

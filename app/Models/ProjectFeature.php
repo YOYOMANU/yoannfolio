@@ -25,9 +25,6 @@ class ProjectFeature extends Model
         'id',
     ];
 
-    /**
-     * @return BelongsTo<Project, static>
-     */
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

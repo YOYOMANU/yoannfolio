@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Trait\HasSortable;
-use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,9 +20,6 @@ class Category extends Model
     /** @var array<int, string> */
     protected $sortable = ['id', 'name'];
 
-    /**
-     * @return BelongsToMany<Technology, static>
-     */
     public function technologies(): BelongsToMany
     {
         return $this->belongsToMany(Technology::class);

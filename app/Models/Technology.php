@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Trait\HasSlug;
 use App\Models\Trait\HasSortable;
-use Database\Factories\TechnologyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -30,17 +29,11 @@ class Technology extends Model implements HasMedia
         'id',
     ];
 
-    /**
-     * @return BelongsToMany<Category, static>
-     */
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
-    /**
-     * @return BelongsToMany<Project, static>
-     */
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);

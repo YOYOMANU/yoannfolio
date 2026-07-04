@@ -4,7 +4,8 @@ includes:
 
 parameters:
     ignoreErrors:
-        - '#Template type TDeclaringModel on class Illuminate\\Database\\Eloquent\\Relations\\.* is not covariant#'
+        - identifier: return.type
+        path: app/Models/*.php
     paths:
         - app/
         - bootstrap/app.php
