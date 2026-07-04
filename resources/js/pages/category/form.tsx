@@ -15,6 +15,10 @@ type Props = {
 
 const Breadcrumbs: BreadcrumbItem[] = [
     {
+        title: " Categories",
+        href: category.index()
+    },
+    {
         title: "Editer une Categorie",
         href: "#"
     }

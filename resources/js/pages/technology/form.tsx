@@ -17,6 +17,7 @@ type Props = {
 };
 
 const Breadcrumbs: BreadcrumbItem[] = [
+    { title: 'Technologies', href: technology.index() },
     { title: 'Editer une Technologie', href: '#' },
 ];
 
