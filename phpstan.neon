@@ -3,6 +3,8 @@ includes:
     - vendor/nesbot/carbon/extension.neon
 
 parameters:
+    ignoreErrors:
+        - '#Template type TDeclaringModel on class Illuminate\\Database\\Eloquent\\Relations\\.* is not covariant#'
     paths:
         - app/
         - bootstrap/app.php
