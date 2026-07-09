@@ -19,7 +19,6 @@ Route::post('/contact', [ContactMessageController::class, 'store'])
     ->middleware('throttle:5,1');
 
 Route::middleware(['auth', 'verified', 'can:access-admin'])->group(function () {
-    // Route::inertia('dashboard', 'dashboard')->name('dashboard');
     Route::get('/dashboard', [TechnologyController::class, 'dashboard'])->name('dashboard');
     Route::resource('project', ProjectController::class)->except('show');
     Route::resource('technology', TechnologyController::class)->except('show');

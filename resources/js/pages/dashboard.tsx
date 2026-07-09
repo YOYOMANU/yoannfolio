@@ -2,9 +2,9 @@ import { Head } from '@inertiajs/react';
 import SkillsRadarChart, { mockSkills } from '@/components/Skillsradarchart';
 import TechStackChart, { mockTechStack } from '@/components/TechStackChart';
 import TrafficSourceChart, { mockTrafficSources } from '@/components/Trafficsourcechart';
-import VisitsAreaChart, { mockVisits } from '@/components/Visitsareachart';
 import { dashboard } from '@/routes';
 import type { TechUsage } from '@/types';
+import VisitsAreaChart, { mockVisits } from '@/components/VisitsAreaChart';
 
 type Props = {
     totalProjects?: number,
