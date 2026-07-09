@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import type { DashboardkChartProps, TrafficSource } from "@/types";
 
 /**
  * TrafficSourceChart — répartition des sources de trafic du portfolio.
@@ -7,15 +8,6 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
  * classée en catégories (Direct, GitHub, LinkedIn, Google, Réseaux sociaux).
  */
 
-export interface TrafficSource {
-    name: string;
-    value: number;
-}
-
-interface TrafficSourceChartProps {
-    data: TrafficSource[];
-    title?: string;
-}
 
 const COLORS = [
     "var(--chart-1)",
@@ -28,8 +20,8 @@ const COLORS = [
 
 function CustomTooltip({ active, payload }: any) {
     if (!active || !payload?.length) {
-return null;
-}
+        return null;
+    }
 
     const item = payload[0];
 
@@ -46,7 +38,7 @@ return null;
 export default function TrafficSourceChart({
     data,
     title = "Sources de trafic",
-}: TrafficSourceChartProps) {
+}: DashboardkChartProps<TrafficSource>) {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const total = data.reduce((acc, d) => acc + d.value, 0);
 

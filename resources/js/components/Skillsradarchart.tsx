@@ -7,16 +7,13 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from "recharts";
+import type { Skill } from "@/types";
 
 /**
  * SkillsRadarChart — niveau de maîtrise par techno.
  * Dynamique: passe n'importe quelle liste de skills en props.
  */
 
-export interface Skill {
-    name: string;
-    level: number; // 0-100
-}
 
 interface SkillsRadarChartProps {
     skills: Skill[];
@@ -25,8 +22,8 @@ interface SkillsRadarChartProps {
 
 function CustomTooltip({ active, payload }: any) {
     if (!active || !payload?.length) {
-return null;
-}
+        return null;
+    }
 
     const item = payload[0].payload;
 

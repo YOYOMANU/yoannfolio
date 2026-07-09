@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import type { DashboardkChartProps, TechUsage } from "@/types";
 
 /**
  * TechStackChart — donut chart de répartition des technos
@@ -7,15 +8,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
  * project_technology côté Laravel : COUNT par technology_id).
  */
 
-export interface TechUsage {
-    name: string;
-    value: number; // nb de projets ou %
-}
 
-interface TechStackChartProps {
-    data: TechUsage[];
-    title?: string;
-}
 
 // Les 5 couleurs de charte déjà prévues pour la data viz (--chart-1 à --chart-5)
 const COLORS = [
@@ -29,8 +22,8 @@ const COLORS = [
 
 function CustomTooltip({ active, payload }: any) {
     if (!active || !payload?.length) {
-return null;
-}
+        return null;
+    }
 
     const item = payload[0];
 
@@ -46,10 +39,10 @@ return null;
 
 export default function TechStackChart({
     data,
-    title = "Répartition des technologies",
-}: TechStackChartProps) {
+    title = "technologies utilisées",
+    total
+}: DashboardkChartProps<TechUsage>) {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const total = data.reduce((acc, d) => acc + d.value, 0);
 
     return (
         <div className="relative flex aspect-video flex-col overflow-hidden rounded-xl border border-border bg-card p-4 transition-shadow duration-300 hover:shadow-[0_12px_30px_rgba(90,85,74,0.08)]">
@@ -113,7 +106,7 @@ export default function TechStackChart({
                                 <span className="text-foreground">{d.name}</span>
                             </span>
                             <span className="font-mono text-muted-foreground">
-                                {Math.round((d.value / total) * 100)}%
+                                {total && Math.round((d.value / total) * 100)}%
                             </span>
                         </li>
                     ))}

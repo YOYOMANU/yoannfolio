@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FormTechnologyRequest;
+use App\Http\Resources\TechnologyDashboard;
 use App\Http\Resources\TechnologyResource;
 use App\Models\Category;
+use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -98,5 +100,16 @@ class TechnologyController extends Controller
         $technology->delete();
 
         return to_route('technology.index')->with('success', 'La technologie à été supprimée avec succès');
+    }
+
+    public function dashboard(): Response
+    {
+        $technologies = TechnologyDashboard::collection(Technology::all());
+        $total = Project::count('id');
+
+        return Inertia::render('dashboard', [
+            'data' => $technologies,
+            'totalProjects' => $total,
+        ]);
     }
 }

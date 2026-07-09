@@ -45,6 +45,27 @@ export interface Project {
     features: ProjectFeature[];
 
 }
+export interface TechUsage {
+    name: string;
+    value: number;
+}
+
+export interface Skill {
+    name: string;
+    level: number; // 0-100
+}
+
+export interface TrafficSource {
+    name: string;
+    value: number;
+}
+
+
+export interface DashboardkChartProps<T> {
+    data: T[];
+    title?: string;
+    total?: number
+}
 
 export type ProjectFeature = {
     id: string;

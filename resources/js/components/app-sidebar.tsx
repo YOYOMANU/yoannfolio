@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import {  Code2Icon, FolderGit2, FolderOpenDotIcon, Grid2X2Check, HomeIcon, LayoutGrid } from 'lucide-react';
+import { Code2Icon, FolderGit2, FolderOpenDotIcon, Grid2X2Check, HomeIcon, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';

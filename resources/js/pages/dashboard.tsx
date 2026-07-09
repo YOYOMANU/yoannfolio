@@ -1,12 +1,18 @@
 import { Head } from '@inertiajs/react';
 import SkillsRadarChart, { mockSkills } from '@/components/Skillsradarchart';
+import TechStackChart, { mockTechStack } from '@/components/TechStackChart';
 import TrafficSourceChart, { mockTrafficSources } from '@/components/Trafficsourcechart';
 import VisitsAreaChart, { mockVisits } from '@/components/Visitsareachart';
 import { dashboard } from '@/routes';
-import TechStackChart, { mockTechStack } from '@/components/TechStackChart';
+import type { TechUsage } from '@/types';
 
+type Props = {
+    totalProjects?: number,
+    data: TechUsage[]
+}
 
-export default function Dashboard() {
+export default function Dashboard({ data, totalProjects }: Props) {
+
     return (
         <>
             <Head title="Dashboard" />
@@ -14,7 +20,7 @@ export default function Dashboard() {
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <SkillsRadarChart skills={mockSkills} />
                     <TrafficSourceChart data={mockTrafficSources} />
-                    <TechStackChart data={mockTechStack} />
+                    <TechStackChart data={data ?? mockTechStack} total={totalProjects} />
                 </div>
                 <div className="relative  flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <VisitsAreaChart data={mockVisits} />
