@@ -2,8 +2,8 @@ import { Head } from '@inertiajs/react';
 import { dashboard } from '@/routes';
 import type { TechUsage } from '@/types';
 import VisitsAreaChart, { mockVisits } from '@/components/VisitsAreaChart';
-import SkillsRadarChart, { mockSkills } from '@/components/Skillsradarchart';
-import TrafficSourceChart, { mockTrafficSources } from '@/components/Trafficsourcechart';
+import SkillsRadarChart, { mockSkills } from '@/components/SkillsRadarChart';
+import TrafficSourceChart, { mockTrafficSources } from '@/components/TrafficSourceChart';
 import TechStackChart, { mockTechStack } from '@/components/TechStackChart';
 
 type Props = {
