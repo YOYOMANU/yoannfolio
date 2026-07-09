@@ -209,6 +209,7 @@ function ProjectShow({ project }: Props) {
                                 <motion.div whileHover={{ scale: 1.01, y: -1 }} whileTap={{ scale: 0.99 }}>
                                     <Link
                                         href={project.live_url}
+                                        target='_blank'
                                         rel="noopener noreferrer"
                                         className="btn btn-outline w-full py-3 text-sm font-medium"
                                         style={{ justifyContent: 'center', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
